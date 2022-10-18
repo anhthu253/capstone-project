@@ -5,8 +5,7 @@ import NavigationBar from "./NavigationBar";
 export default function Layout({ children }) {
   return (
     <StyledLayout>
-      <Header></Header>
-      <NavigationLayout></NavigationLayout>
+      <Header />
       <MainLayout>{children}</MainLayout>
     </StyledLayout>
   );
@@ -20,11 +19,11 @@ const StyledLayout = styled.section`
 `;
 
 const HeaderLayout = styled(Header)`
-  grid-row: 1 / 2;
+  grid-row: 1;
 `;
 
 const NavigationLayout = styled(NavigationBar)`
-  grid-row: 2 / 3;
+  grid-row: 2;
 `;
 
 const MainLayout = styled(Main)`

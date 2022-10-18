@@ -5,11 +5,7 @@ import ArticleListContainer from "../components/ArticleListContainer";
 export default function Home() {
   return (
     <>
-      <ArticleListLayout></ArticleListLayout>
+      <ArticleListContainer></ArticleListContainer>
     </>
   );
 }
-
-const ArticleListLayout = styled(ArticleListContainer)`
-  grid-colume: 1 / 2;
-`;

@@ -23,7 +23,6 @@ const initialArticles = [
 export default function ArticleListContainer({ className }) {
   const [articles, setArticles] = useState(initialArticles);
 
-  console.log("hey", articles);
   return (
     <StyledListContainer className={className}>
       {articles.map((article) => (

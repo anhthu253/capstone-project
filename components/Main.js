@@ -6,5 +6,4 @@ export default function Main({ className, children }) {
 
 const StyledMain = styled.main`
   display: grid;
-  grid-template-columns: 3fr 2fr;
 `;

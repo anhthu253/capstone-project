@@ -12,7 +12,7 @@ export default function Header({ className }) {
 const StyledHeader = styled.header`
   display: grid;
   grid-template-rows: 1fr 1fr;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 1fr 1fr;
   border-top: var(--line-primary);
   border-bottom: var(--line-primary);
 `;

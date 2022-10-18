@@ -1,11 +1,27 @@
 import Image from "next/image";
 import styled from "styled-components";
 import ArticleListContainer from "../components/ArticleListContainer";
+import { getAllArticles } from "../services/articleService";
+import { useRouter } from "next/router";
 
-export default function Home() {
+export async function getServerSideProps() {
+  const articles = await getAllArticles();
+
+  return {
+    props: { articles: articles },
+  };
+}
+export default function Home({ articles }) {
+  const router = useRouter();
+
   return (
     <>
-      <ArticleListContainer></ArticleListContainer>
+      <ArticleListContainer
+        articles={articles}
+        showArticle={(id) => {
+          router.push(`/${id}`);
+        }}
+      ></ArticleListContainer>
     </>
   );
 }

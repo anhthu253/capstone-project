@@ -1,12 +1,8 @@
 import styled from "styled-components";
 import Image from "next/image";
-import { useRouter } from "next/router";
 
-export default function ArticleCard({ text }) {
-  const router = useRouter();
-  return (
-    <StyledCard onClick={() => router.push("/content")}>{text}</StyledCard>
-  );
+export default function ArticleCard({ text, showContent }) {
+  return <StyledCard onClick={showContent}>{text}</StyledCard>;
 }
 
 const StyledCard = styled.section`

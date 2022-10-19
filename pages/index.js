@@ -1,5 +1,3 @@
-import Image from "next/image";
-import styled from "styled-components";
 import ArticleListContainer from "../components/ArticleListContainer";
 import { getAllArticles } from "../services/articleService";
 

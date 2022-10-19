@@ -1,8 +1,12 @@
 import styled from "styled-components";
-import Image from "next/image";
+import Link from "next/link";
 
-export default function ArticleCard({ text, showContent }) {
-  return <StyledCard onClick={showContent}>{text}</StyledCard>;
+export default function ArticleCard({ id, text }) {
+  return (
+    <Link href={`/${id}`}>
+      <StyledCard>{text}</StyledCard>
+    </Link>
+  );
 }
 
 const StyledCard = styled.section`

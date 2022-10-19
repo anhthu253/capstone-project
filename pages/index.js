@@ -12,16 +12,9 @@ export async function getServerSideProps() {
   };
 }
 export default function Home({ articles }) {
-  const router = useRouter();
-
   return (
     <>
-      <ArticleListContainer
-        articles={articles}
-        showArticle={(id) => {
-          router.push(`/${id}`);
-        }}
-      ></ArticleListContainer>
+      <ArticleListContainer articles={articles}></ArticleListContainer>
     </>
   );
 }

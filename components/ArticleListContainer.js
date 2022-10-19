@@ -1,20 +1,11 @@
 import styled from "styled-components";
 import ArticleCard from "./ArticleCard";
-import { useState } from "react";
 
-export default function ArticleListContainer({
-  className,
-  articles,
-  showArticle,
-}) {
+export default function ArticleListContainer({ className, articles }) {
   return (
     <StyledListContainer className={className}>
       {articles.map((article) => (
-        <ArticleCard
-          key={article.id}
-          {...article}
-          showContent={() => showArticle(article.id)}
-        ></ArticleCard>
+        <ArticleCard key={article.id} {...article}></ArticleCard>
       ))}
     </StyledListContainer>
   );

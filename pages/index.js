@@ -1,14 +1,13 @@
+import { useCallback } from "react";
 import ArticleListContainer from "../components/ArticleListContainer";
-import { getAllArticles } from "../services/articleService";
+import { useState, useEffect } from "react";
 
-export async function getServerSideProps() {
-  const articles = await getAllArticles();
+export default function Home() {
+  const [articles, setArticles] = useState([]);
 
-  return {
-    props: { articles: articles },
-  };
-}
-export default function Home({ articles }) {
+  useEffect(() => {
+    setArticles(JSON.parse(localStorage.getItem("articles")) ?? []);
+  }, []);
   return (
     <>
       <ArticleListContainer articles={articles} />

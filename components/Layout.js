@@ -6,6 +6,7 @@ export default function Layout({ children }) {
   return (
     <StyledLayout>
       <Header />
+      <NavigationLayout></NavigationLayout>
       <MainLayout>{children}</MainLayout>
     </StyledLayout>
   );

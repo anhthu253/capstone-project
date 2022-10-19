@@ -10,11 +10,11 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function Article(article) {
+export default function Article({ text }) {
   const router = useRouter();
   return (
     <Content
-      text={article.text}
+      text={text}
       goBack={() => {
         router.push("/");
       }}

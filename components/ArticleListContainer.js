@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import ArticleCard from "./ArticleCard";
 
-export default function ArticleListContainer({ className, articles }) {
+export default function ArticleListContainer({ articles }) {
   return (
-    <StyledListContainer className={className}>
+    <StyledListContainer>
       {articles.map((article) => (
-        <ArticleCard key={article.id} {...article}></ArticleCard>
+        <ArticleCard key={article.id} {...article} />
       ))}
     </StyledListContainer>
   );

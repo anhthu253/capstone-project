@@ -1,14 +1,9 @@
 import ArticleListContainer from "../components/ArticleListContainer";
-import { getAllArticles } from "../services/articleService";
+import useLocalStorage from "../hooks/useLocalStorage";
 
-export async function getServerSideProps() {
-  const articles = await getAllArticles();
+export default function Home() {
+  const [articles, setArticles] = useLocalStorage("articles", []);
 
-  return {
-    props: { articles: articles },
-  };
-}
-export default function Home({ articles }) {
   return (
     <>
       <ArticleListContainer articles={articles} />

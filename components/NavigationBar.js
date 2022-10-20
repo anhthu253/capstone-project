@@ -1,33 +1,36 @@
 import styled from "styled-components";
 import NavigationItem from "./NavigationItem";
 import Link from "next/link";
+import { Icon } from "@iconify/react";
+import { useRouter } from "next/router";
 
 export default function NavigationBar({ className }) {
+  const router = useRouter();
   return (
     <StyledNav className={className}>
       <Link href="/" passHref>
-        <StyledLink>Home</StyledLink>
+        <StyledLink active={router.pathname === "/"}>Home</StyledLink>
       </Link>
-      <Link href="collections" passHref>
-        <StyledLink>Collections</StyledLink>
-      </Link>
-      <Link href="dashboard" passHref>
-        <StyledLink>Dashboard</StyledLink>
+      <Link href="/search" passHref>
+        <StyledLink active={router.pathname === "/search"}>
+          <Icon icon="ant-design:file-search-outlined" />
+        </StyledLink>
       </Link>
     </StyledNav>
   );
 }
 const StyledNav = styled.nav`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  flex-direction: row wrap;
+  justify-content: space-between;
   border-top: var(--line-primary);
   border-bottom: var(--line-primary);
 `;
 
 const StyledLink = styled.a`
-  justify-self: center;
   margin: auto 0;
   text-decoration: none;
+  color: ${({ active }) => (active ? "red" : "none")};
   &:hover {
     background: lightblue;
     cursor: pointer;

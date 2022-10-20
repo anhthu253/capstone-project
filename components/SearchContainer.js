@@ -71,7 +71,7 @@ const StyledSearchContainer = styled.form`
   border: var(--line-primary);
 `;
 
-const StyledArticle = styled.article`
+const StyledArticle = styled.section`
   display: grid;
   grid-template-columns: 6rem 12rem 1fr;
   gap: 1rem;

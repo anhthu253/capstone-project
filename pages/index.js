@@ -1,13 +1,9 @@
-import { useCallback } from "react";
 import ArticleListContainer from "../components/ArticleListContainer";
-import { useState, useEffect } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 export default function Home() {
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useLocalStorage("articles", []);
 
-  useEffect(() => {
-    setArticles(JSON.parse(localStorage.getItem("articles")) ?? []);
-  }, []);
   return (
     <>
       <ArticleListContainer articles={articles} />

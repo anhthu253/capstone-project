@@ -1,4 +1,7 @@
-import { getArticlesByKeywords } from "../../../services/articleService";
+import {
+  getArticlesBy,
+  getArticlesByKeywords,
+} from "../../../services/articleService";
 export default async function handler(request, response) {
   const { thema, source, when, country } = request.query;
   if (request.method === "GET") {

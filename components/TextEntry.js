@@ -14,7 +14,7 @@ export default function TextEntry({ label, id, value, name, placeholder }) {
   );
 }
 
-const StyledTextEntry = styled.article`
+const StyledTextEntry = styled.section`
   display: grid;
   grid-template-columns: 6rem 12rem 1fr;
   gap: 1rem;

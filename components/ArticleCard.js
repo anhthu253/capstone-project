@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { useStore } from "../hooks/useStore";
 
 export default function ArticleCard({
   id,
@@ -12,6 +13,7 @@ export default function ArticleCard({
   alert,
 }) {
   const router = useRouter();
+  const setArticle = useStore((state) => state.setArticle);
 
   async function getFullContent() {
     const response = await fetch(`/api/search/${id}`, {
@@ -20,7 +22,7 @@ export default function ArticleCard({
     });
 
     const data = await response.json();
-    localStorage.setItem("article", JSON.stringify({ fullcontent: data }));
+    setArticle({ fullcontent: data });
     router.push(`/${id}`);
   }
   return (

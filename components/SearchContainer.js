@@ -2,9 +2,12 @@ import styled from "styled-components";
 import TextEntry from "./TextEntry";
 import Button from "./Button";
 import { useRouter } from "next/router";
+import { useStore } from "../hooks/useStore";
 
 export default function SearchContainer() {
   const router = useRouter();
+  const setArticles = useStore((state) => state.setArticles);
+
   async function handleSubmit(event) {
     event.preventDefault();
     const formdata = new FormData(event.target);
@@ -18,7 +21,7 @@ export default function SearchContainer() {
       return { ...result, id: Math.random().toString(36).substring(2) };
     });
 
-    localStorage.setItem("articles", JSON.stringify(articles));
+    setArticles(articles);
 
     router.push("/");
   }

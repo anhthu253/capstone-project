@@ -1,8 +1,8 @@
 import ArticleListContainer from "../components/ArticleListContainer";
-import useLocalStorage from "../hooks/useLocalStorage";
+import { useStore } from "../hooks/useStore";
 
 export default function Home() {
-  const [articles, setArticles] = useLocalStorage("articles", []);
+  const articles = useStore((state) => state.articles);
 
   return (
     <>

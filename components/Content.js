@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import Link from "next/link";
-export default function Content({ text }) {
+export default function Content({ content }) {
   return (
     <section>
       <Link href="/" passHref>
         <StyledButton>Back</StyledButton>
       </Link>
-      <StyledContent>{text}</StyledContent>
+      <StyledContent
+        dangerouslySetInnerHTML={{ __html: content }}
+      ></StyledContent>
     </section>
   );
 }

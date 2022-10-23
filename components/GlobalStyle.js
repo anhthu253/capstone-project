@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
 :root {
     --background-primary:#F5F5F5;
     --text-color: #2b2626;
+    --navigation-color:#C8A158;
     --line-color: #838586;
     --line-primary: #838586 2px solid ;
     --line-secondary: #838586 1px solid;

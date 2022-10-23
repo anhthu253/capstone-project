@@ -1,20 +1,11 @@
-import { getArticlesById } from "../services/articleService";
 import Content from "../components/Content";
-import { useRouter } from "next/router";
+import useLocalStorage from "../hooks/useLocalStorage";
 
-export async function getServerSideProps(context) {
-  const { id } = context.params;
-  const article = await getArticlesById(id);
-  return {
-    props: { ...article },
-  };
-}
-
-export default function Article({ text }) {
-  const router = useRouter();
+export default function Article() {
+  const [article, setArticle] = useLocalStorage("article", {});
   return (
     <Content
-      text={text}
+      content={article.fullcontent}
       goBack={() => {
         router.push("/");
       }}

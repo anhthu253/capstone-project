@@ -1,5 +1,5 @@
-const { JSDOM } = require("jsdom");
-const { Readability } = require("@mozilla/readability");
+import { JSDOM } from "jsdom";
+import { Readability } from "@mozilla/readability";
 export default async function handler(request, response) {
   if (request.method === "POST") {
     const { url } = JSON.parse(request.body);

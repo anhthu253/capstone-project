@@ -15,6 +15,8 @@ export default function Content({ content }) {
 
 const StyledContent = styled.div`
   margin-top: 1rem;
+  & img {
+  }
 `;
 
 const StyledButton = styled.button`

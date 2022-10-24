@@ -1,10 +1,8 @@
 export default async function handler(request, response) {
-  if (request.method === "POST") {
-    const params = JSON.parse(request.body);
+  if (request.method === "GET") {
+    const params = request.query;
     let urlParams = "";
-    for (const param in params) {
-      urlParams += params[param] === "" ? "" : `${param}=${params[param]}&`;
-    }
+    for (const param in params) urlParams += `${param}=${params[param]}&`;
 
     const res = await fetch(
       `https://newsapi.org/v2/everything?${urlParams}apiKey=fb05f04d266e4823b11f86f3763d416e`

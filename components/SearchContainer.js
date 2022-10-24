@@ -13,10 +13,13 @@ export default function SearchContainer() {
     event.preventDefault();
     const formdata = new FormData(event.target);
     const data = Object.fromEntries(formdata);
-    const response = await fetch(`/api/search`, {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+
+    let params = "";
+    for (const entry in data) {
+      params += data[entry] === "" ? "" : `${entry}=${data[entry]}&`;
+    }
+
+    const response = await fetch(`/api/search?${params}`);
     const results = await response.json();
     const articles = results.map((result) => {
       return { ...result, id: Math.random().toString(36).substring(2) };

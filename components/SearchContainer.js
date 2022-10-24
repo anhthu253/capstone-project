@@ -13,11 +13,8 @@ export default function SearchContainer() {
     event.preventDefault();
     const formdata = new FormData(event.target);
     const data = Object.fromEntries(formdata);
-
-    let params = "";
-    for (const entry in data) {
-      params += data[entry] === "" ? "" : `${entry}=${data[entry]}&`;
-    }
+    const entries = Object.entries(data);
+    const params = entries.map((entry) => entry.join("=")).join("&");
 
     const response = await fetch(`/api/search?${params}`);
     const results = await response.json();

@@ -16,7 +16,7 @@ export default function ArticleCard({
   const setArticle = useStore((state) => state.setArticle);
 
   async function getFullContent() {
-    const response = await fetch(`/api/search/${id}?url=${url}`);
+    const response = await fetch(`/api/search/article?url=${url}`);
     const data = await response.json();
     setArticle({ fullcontent: data });
     router.push(`/content`);

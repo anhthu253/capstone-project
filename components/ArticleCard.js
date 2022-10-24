@@ -23,7 +23,7 @@ export default function ArticleCard({
 
     const data = await response.json();
     setArticle({ fullcontent: data });
-    router.push(`/${id}`);
+    router.push(`/content`);
   }
   return (
     <li>

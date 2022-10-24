@@ -3,6 +3,7 @@ import TextEntry from "./TextEntry";
 import Button from "./Button";
 import { useRouter } from "next/router";
 import { useStore } from "../hooks/useStore";
+import searchCriteria from "../lib/searchCriteria";
 
 export default function SearchContainer() {
   const router = useRouter();
@@ -28,38 +29,9 @@ export default function SearchContainer() {
 
   return (
     <StyledSearchContainer onSubmit={handleSubmit}>
-      <TextEntry
-        label="keywords"
-        id="keywords"
-        name="keywords"
-        placeholder="eg. election, bitcoin"
-      />
-      <TextEntry
-        label="sources"
-        id="sources"
-        name="sources"
-        placeholder="eg. nytimes, rolling stone"
-      />
-      <TextEntry
-        label="domains"
-        id="domains"
-        name="domains"
-        placeholder="eg. bbc.uk, politico.com"
-      />
-      <TextEntry
-        label="from"
-        id="from"
-        name="from"
-        placeholder="eg. 2022-10-01"
-      />
-      <TextEntry label="to" id="to" name="to" placeholder="eg. 2022-10-02" />
-      <TextEntry
-        label="language"
-        id="language"
-        name="language"
-        placeholder="eg. de, en, es"
-      />
-
+      {searchCriteria.map((entry) => (
+        <TextEntry {...entry} />
+      ))}
       <StyledArticle>
         <label htmlFor="sortBy">sorted by</label>
         <StyledSelect name="sortBy" id="sortBy">
@@ -71,7 +43,6 @@ export default function SearchContainer() {
       <StyledArticle>
         <label></label>
         <StyledButton>Search</StyledButton>
-        <label></label>
       </StyledArticle>
     </StyledSearchContainer>
   );

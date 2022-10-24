@@ -35,14 +35,14 @@ export default function ArticleCard({
         )
       ) : (
         <StyledCard>
-          <article>
+          <div>
             <img
               src={urlToImage}
               alt="article image"
               width="250"
               height="150"
             ></img>
-          </article>
+          </div>
 
           <article>
             <Title onClick={getFullContent}>{title}</Title>
@@ -74,6 +74,7 @@ const StyledCard = styled.section`
   display: flex;
   flex-flow: row wrap;
   gap: 20px;
+  border-bottom: var(--line-secondary);
 `;
 
 const StyledError = styled.section`

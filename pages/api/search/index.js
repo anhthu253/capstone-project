@@ -1,18 +1,13 @@
 export default async function handler(request, response) {
   if (request.method === "POST") {
-    const { keywords, sources, domains, from, to, language, sortBy } =
-      JSON.parse(request.body);
-    const params = createParams(
-      keywords,
-      sources,
-      domains,
-      from,
-      to,
-      language,
-      sortBy
-    );
+    const params = JSON.parse(request.body);
+    let urlParams = "";
+    for (const param in params) {
+      urlParams += params[param] === "" ? "" : `${param}=${params[param]}&`;
+    }
+
     const res = await fetch(
-      `https://newsapi.org/v2/everything?${params}apiKey=fb05f04d266e4823b11f86f3763d416e`
+      `https://newsapi.org/v2/everything?${urlParams}apiKey=fb05f04d266e4823b11f86f3763d416e`
     );
     const data = await res.json();
     if (data.status === "error")
@@ -28,18 +23,4 @@ export default async function handler(request, response) {
     }
   }
   response.status(403).json({ message: "Error: request method not allowed." });
-}
-
-function createParams(keywords, sources, domains, from, to, language, sortBy) {
-  let params = "";
-  if (keywords !== "") params += "q=" + keywords + "&";
-  if (sources !== "") params += "sources=" + sources + "&";
-  if (domains !== "") params += "domains=" + domains + "&";
-  if (from !== "") params += "&from=" + from + "&";
-  if (to !== "") params += "&to=" + to + "&";
-  if (language !== "") params += "&language=" + language + "&";
-  if (sortBy !== "" && sortBy !== "publishedAt")
-    params += "&sortBy=" + sortBy + "&";
-
-  return params;
 }

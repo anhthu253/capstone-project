@@ -2,15 +2,15 @@ import create from "zustand";
 
 export const useStore = create((set) => ({
   articles: [],
-  article: {},
-  setArticles: (newarticles) => {
+  currentArticle: {},
+  setArticles: (newArticles) => {
     set((state) => {
-      return { articles: newarticles };
+      return { articles: newArticles };
     });
   },
-  setArticle: (newarticle) => {
+  setArticle: (selectedArticle) => {
     set((state) => {
-      return { article: newarticle };
+      return { currentArticle: selectedArticle };
     });
   },
 }));

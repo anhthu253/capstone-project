@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import NavigationItem from "./NavigationItem";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
@@ -30,9 +29,8 @@ const StyledNav = styled.nav`
 const StyledLink = styled.a`
   margin: auto 0;
   text-decoration: none;
-  color: ${({ active }) => (active ? "red" : "none")};
+  color: ${({ active }) => (active ? "var(--navigation-color)" : "none")};
   &:hover {
-    background: lightblue;
     cursor: pointer;
   }
 `;

@@ -1,18 +1,25 @@
+import { useStore } from "../hooks/useStore";
+
 import styled from "styled-components";
 import Link from "next/link";
-export default function Content({ text }) {
+export default function Content({ content }) {
+  const article = useStore((state) => state.currentArticle);
   return (
     <section>
       <Link href="/" passHref>
         <StyledButton>Back</StyledButton>
       </Link>
-      <StyledContent>{text}</StyledContent>
+      <StyledContent
+        dangerouslySetInnerHTML={{ __html: article.fullcontent }}
+      ></StyledContent>
     </section>
   );
 }
 
 const StyledContent = styled.div`
   margin-top: 1rem;
+  & img {
+  }
 `;
 
 const StyledButton = styled.button`

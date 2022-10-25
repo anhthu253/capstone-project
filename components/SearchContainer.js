@@ -30,7 +30,7 @@ export default function SearchContainer() {
   return (
     <StyledSearchContainer onSubmit={handleSubmit}>
       {searchCriteria.map((entry) => (
-        <TextEntry {...entry} />
+        <TextEntry key={entry.id} {...entry} />
       ))}
       <StyledArticle>
         <label htmlFor="sortBy">sorted by</label>

@@ -57,23 +57,23 @@ const GlobalStyle = createGlobalStyle`
       url("/fonts/gothic-a1-v13-latin-regular.woff2") format("woff2"),
       url("/fonts/gothic-a1-v13-latin-regular.woff") format("woff");
   }
-  /* gothic-a1-500 - latin */
+  /* gothic-a1-regular - latin */
   @font-face {
-    font-family: "Gothic A1";
-    font-style: normal;
-    font-weight: 500;
-    src: local(""), 
-      url("/fonts/gothic-a1-v13-latin-500.woff2") format("woff2"),
-      url("/fonts/gothic-a1-v13-latin-500.woff") format("woff");
-  }
-  
-  @font-face {
-    font-family: 'Ephesis';
+    font-family: 'Gothic A1';
     font-style: normal;
     font-weight: 400;
     src: local(''),
-         url('../fonts/ephesis-v7-latin-regular.woff2') format('woff2'),
-         url('../fonts/ephesis-v7-latin-regular.woff') format('woff'); 
+         url('../fonts/gothic-a1-v13-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+         url('../fonts/gothic-a1-v13-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+  /* gothic-a1-500 - latin */
+  @font-face {
+    font-family: 'Gothic A1';
+    font-style: normal;
+    font-weight: 500;
+    src: local(''),
+         url('../fonts/gothic-a1-v13-latin-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+         url('../fonts/gothic-a1-v13-latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
   }
   
   body {

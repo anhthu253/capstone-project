@@ -1,24 +1,48 @@
 import { useStore } from "../hooks/useStore";
-
+import { Icon } from "@iconify/react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import Link from "next/link";
-export default function Content({ content }) {
-  const article = useStore((state) => state.currentArticle);
+export default function Content() {
+  const currentArticle = useStore((state) => state.currentArticle);
+  const add2Collections = useStore((state) => state.add2Collections);
+  const router = useRouter();
+
+  function saveArticle() {
+    add2Collections({ ...currentArticle, isSaved: true });
+    router.push("/collections");
+  }
   return (
-    <section>
+    <StyledSection>
       <Link href="/" passHref>
         <StyledButton>Back</StyledButton>
       </Link>
+      {!currentArticle.isSaved && (
+        <StyledIcon icon="entypo:dots-three-vertical" onClick={saveArticle} />
+      )}
       <StyledContent
-        dangerouslySetInnerHTML={{ __html: article.fullcontent }}
+        dangerouslySetInnerHTML={{ __html: currentArticle.fullContent }}
       ></StyledContent>
-    </section>
+    </StyledSection>
   );
 }
+
+const StyledSection = styled.section`
+  position: relative;
+`;
 
 const StyledContent = styled.div`
   margin-top: 1rem;
   & img {
+  }
+`;
+
+const StyledIcon = styled(Icon)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  &:hover {
+    cursor: pointer;
   }
 `;
 

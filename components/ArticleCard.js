@@ -7,9 +7,9 @@ export default function ArticleCard({ article }) {
     article;
   const router = useRouter();
   const setCurrentArticle = useStore((state) => state.setCurrentArticle);
-  const currentArticle = useStore((state) => state.currentArticle);
   async function getFullContent() {
     if (!article.isSaved) {
+      //if not yet fetched
       const response = await fetch(`/api/search/article?url=${url}`);
       const data = await response.json();
       setCurrentArticle({
@@ -17,7 +17,7 @@ export default function ArticleCard({ article }) {
         fullContent: data,
         isSaved: false,
       });
-    }
+    } else setCurrentArticle(article);
     router.push(`/content`);
   }
   return (

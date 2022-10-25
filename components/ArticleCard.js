@@ -9,7 +9,6 @@ export default function ArticleCard({ article }) {
   const setCurrentArticle = useStore((state) => state.setCurrentArticle);
   const currentArticle = useStore((state) => state.currentArticle);
   async function getFullContent() {
-    console.log("if article is saved", currentArticle.isSaved);
     if (!article.isSaved) {
       const response = await fetch(`/api/search/article?url=${url}`);
       const data = await response.json();

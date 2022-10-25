@@ -34,6 +34,8 @@ const StyledSection = styled.section`
 const StyledContent = styled.div`
   margin-top: 1rem;
   & img {
+    width: 250px;
+    height: auto;
   }
 `;
 

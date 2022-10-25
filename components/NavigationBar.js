@@ -10,11 +10,6 @@ export default function NavigationBar({ className }) {
       <Link href="/" passHref>
         <StyledLink active={router.pathname === "/"}>Home</StyledLink>
       </Link>
-      <Link href="/collections" passHref>
-        <StyledLink active={router.pathname === "/collections"}>
-          Collections
-        </StyledLink>
-      </Link>
       <Link href="/search" passHref>
         <StyledLink active={router.pathname === "/search"}>
           <Icon icon="ant-design:file-search-outlined" />

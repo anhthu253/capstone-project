@@ -1,13 +1,28 @@
 import ArticleListContainer from "../components/ArticleListContainer";
-const initialSavedArticle = [
-  {
-    id: "54543095",
-    title: "Chaos Is as Chaos Does",
-    author: "JAMES HOWARD KUNSTLER",
-    description:
-      "When this future becomes the present, that present will look obvious. It always does. And from that present, this past we are living in will look ridiculous…. — Curtis Yarvin It’s hard to escape the awful feeling that Western Civ has a death wish, or say whic…",
-  },
-];
+import { useStore } from "../hooks/useStore";
+import styled from "styled-components";
+import Link from "next/link";
 export default function Collections() {
-  return <ArticleListContainer articles={initialSavedArticle} />;
+  const collections = useStore((state) => state.collections);
+  return (
+    <StyledSection>
+      <Link href="/" passHref>
+        <StyledButton>Back</StyledButton>
+      </Link>
+      <ArticleListContainer articles={collections} />
+    </StyledSection>
+  );
 }
+
+const StyledSection = styled.section`
+  position: relative;
+`;
+
+const StyledButton = styled.button`
+  width: 5rem;
+  height: 2rem;
+  border-radius: 5px;
+  background: var(--background-primary);
+  box-shadow: 3px 2px 3px 2px var(--line-color);
+  border: var(--line-color);
+`;

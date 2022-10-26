@@ -2,23 +2,22 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useStore } from "../hooks/useStore";
 
-export default function ArticleCard({
-  id,
-  url,
-  urlToImage,
-  title,
-  author,
-  description,
-  message,
-  alert,
-}) {
+export default function ArticleCard({ article }) {
+  const { url, urlToImage, title, author, description, message, alert } =
+    article;
   const router = useRouter();
-  const setArticle = useStore((state) => state.setArticle);
-
+  const setCurrentArticle = useStore((state) => state.setCurrentArticle);
   async function getFullContent() {
-    const response = await fetch(`/api/search/article?url=${url}`);
-    const data = await response.json();
-    setArticle({ fullcontent: data });
+    if (!article.isSaved) {
+      //if not yet fetched
+      const response = await fetch(`/api/search/article?url=${url}`);
+      const data = await response.json();
+      setCurrentArticle({
+        ...article,
+        fullContent: data,
+        isSaved: false,
+      });
+    } else setCurrentArticle(article);
     router.push(`/content`);
   }
   return (

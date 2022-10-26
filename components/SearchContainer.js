@@ -19,7 +19,10 @@ export default function SearchContainer() {
     const response = await fetch(`/api/search?${params}`);
     const results = await response.json();
     const articles = results.map((result) => {
-      return { ...result, id: Math.random().toString(36).substring(2) };
+      return {
+        ...result,
+        id: Math.random().toString(36).substring(2),
+      };
     });
 
     setArticles(articles);

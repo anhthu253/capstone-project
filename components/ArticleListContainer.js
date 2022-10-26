@@ -5,7 +5,7 @@ export default function ArticleListContainer({ articles }) {
   return (
     <StyledListContainer>
       {articles.map((article) => (
-        <ArticleCard key={article.id} {...article} />
+        <ArticleCard key={article.id} article={article} />
       ))}
     </StyledListContainer>
   );

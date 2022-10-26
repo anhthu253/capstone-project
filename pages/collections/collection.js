@@ -1,15 +1,15 @@
-import ArticleListContainer from "../components/ArticleListContainer";
-import { useStore } from "../hooks/useStore";
+import ArticleListContainer from "../../components/ArticleListContainer";
 import styled from "styled-components";
 import Link from "next/link";
-export default function Collections() {
-  const collections = useStore((state) => state.collections);
+import { useStore } from "../../hooks/useStore";
+export default function Collection() {
+  const currentCollection = useStore((state) => state.currentCollection);
   return (
     <StyledSection>
-      <Link href="/" passHref>
+      <Link href="/collections" passHref>
         <StyledButton>Back</StyledButton>
       </Link>
-      <ArticleListContainer articles={collections} />
+      <ArticleListContainer articles={currentCollection.articles} />
     </StyledSection>
   );
 }

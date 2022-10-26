@@ -66,6 +66,7 @@ export default function PopupMenu({ popUp, setPopUp, article }) {
         {!editMode &&
           collections.map((collection) => (
             <CollectionItem
+              key={collection.id}
               onCollection={() => onSelectedCollection(collection.id)}
               removable={false}
             >

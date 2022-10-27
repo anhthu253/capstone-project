@@ -22,8 +22,6 @@ export const useStore = create((set) => ({
   },
   addCollection: (newCollection) => {
     set((state) => {
-      if (state.collections.find((item) => item.id === newCollection.id))
-        return { collections: state.collections };
       return { collections: [...state.collections, newCollection] };
     });
   },

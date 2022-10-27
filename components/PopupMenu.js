@@ -13,18 +13,27 @@ export default function PopupMenu({ popUp, setPopUp, article }) {
     event.preventDefault();
     const formdata = new FormData(event.target);
     const data = Object.fromEntries(formdata);
-    addCollection({
-      id: Math.random().toString(36).substring(2),
-      name: data.name,
-      description: data.description,
-      articles: [],
-    });
+    if (collections.find((collection) => collection.name === data.name))
+      alert("A collection with this name already exists");
+    else
+      addCollection({
+        id: Math.random().toString(36).substring(2),
+        name: data.name,
+        description: data.description,
+        articles: [],
+      });
 
     setEditMode(false);
   }
 
   function onSelectedCollection(id) {
-    add2Collection(article, id);
+    if (
+      collections
+        .find((item) => item.id === id)
+        .articles.find((item) => item.id === article.id)
+    )
+      alert("The article is already added to this collection");
+    else add2Collection(article, id);
     setPopUp(false);
   }
 

@@ -3,7 +3,7 @@ import create from "zustand";
 export const useStore = create((set) => ({
   articles: [],
   currentArticle: {},
-  currentCollection: [],
+  currentCollection: [{ id: "", name: "", description: "", articles: [] }],
   collections: [],
   setArticles: (newArticles) => {
     set((state) => {

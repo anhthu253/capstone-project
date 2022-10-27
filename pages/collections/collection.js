@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useStore } from "../../hooks/useStore";
 export default function Collection() {
   const currentCollection = useStore((state) => state.currentCollection);
+  console.log("current collection", currentCollection.articles);
   return (
     <StyledSection>
       <Link href="/collections" passHref>

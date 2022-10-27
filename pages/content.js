@@ -1,7 +1,6 @@
 import { useStore } from "../hooks/useStore";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
-import { useRouter } from "next/router";
 import styled from "styled-components";
 import Link from "next/link";
 import PopupMenu from "../components/PopupMenu";

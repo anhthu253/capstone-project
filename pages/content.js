@@ -1,25 +1,36 @@
 import { useStore } from "../hooks/useStore";
+import { useState } from "react";
 import { Icon } from "@iconify/react";
-import { useRouter } from "next/router";
 import styled from "styled-components";
 import Link from "next/link";
+import PopupMenu from "../components/PopupMenu";
 export default function Content() {
   const currentArticle = useStore((state) => state.currentArticle);
-  const add2Collections = useStore((state) => state.add2Collections);
-  const router = useRouter();
+  const [popUp, setPopUp] = useState(false);
 
-  function saveArticle() {
-    add2Collections({ ...currentArticle, isSaved: true });
-    router.push("/collections");
-  }
   return (
     <StyledSection>
       <Link href="/" passHref>
         <StyledButton>Back</StyledButton>
       </Link>
+
       {!currentArticle.isSaved && (
-        <StyledIcon icon="entypo:dots-three-vertical" onClick={saveArticle} />
+        <StyledIcon
+          icon="entypo:dots-three-vertical"
+          onClick={() => {
+            setPopUp((popup) => !popup);
+          }}
+        />
       )}
+
+      {popUp && (
+        <PopupMenu
+          popUp={popUp}
+          setPopUp={setPopUp}
+          article={{ ...currentArticle, isSaved: true }}
+        />
+      )}
+
       <StyledContent
         dangerouslySetInnerHTML={{ __html: currentArticle.fullContent }}
       ></StyledContent>

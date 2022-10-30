@@ -73,4 +73,7 @@ const StyledSelect = styled.select`
 
 const StyledButton = styled(Button)`
   justify-self: end;
+  box-shadow: 3px 2px 3px 2px var(--line-color);
+  border: var(--line-color);
+  background: transparent;
 `;

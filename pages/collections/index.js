@@ -1,49 +1,121 @@
-import ArticleListContainer from "../../components/ArticleListContainer";
-import { useStore } from "../../hooks/useStore";
 import styled from "styled-components";
 import Link from "next/link";
 import CollectionItem from "../../components/CollectionItem";
-import { useRouter } from "next/router";
-export default function Collections() {
-  const collections = useStore((state) => state.collections);
-  const setCurrentCollection = useStore((state) => state.setCurrentCollection);
-  const removeCollection = useStore((state) => state.removeCollection);
-  const router = useRouter();
-  function onSelectedCollection(collection) {
-    setCurrentCollection(collection);
-    router.push("/collections/collection");
+import { getAllCollections } from "../../services/collectionService";
+import { useState } from "react";
+import CollectionForm from "../../components/CollectionForm";
+import Button from "../../components/Button";
+
+export async function getServerSideProps() {
+  const currentCollections = await getAllCollections();
+
+  return {
+    props: {
+      currentCollections,
+    },
+  };
+}
+
+export default function Collections({ currentCollections }) {
+  const [collections, setCollections] = useState(currentCollections);
+  const [editMode, setEditMode] = useState(false);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formdata = new FormData(event.target);
+    const data = Object.fromEntries(formdata);
+    saveCollection2DB(data);
+    setEditMode(false);
+  }
+
+  async function saveCollection2DB(collection) {
+    const { name, description } = collection;
+    const newCollection = {
+      name: name,
+      description: description,
+    };
+    try {
+      const response = await fetch("/api/collection", {
+        method: "POST",
+        body: JSON.stringify(newCollection),
+      });
+      const createdCollection = await response.json();
+      reloadCollections();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function removeCollection(collectionId) {
+    try {
+      const response = await fetch(`/api/collection/${collectionId}`, {
+        method: "DELETE",
+      });
+      reloadCollections();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function reloadCollections() {
+    try {
+      const response = await fetch(`/api/collection`);
+      const cols = await response.json();
+      setCollections(cols);
+    } catch (error) {
+      console.error(error);
+    }
   }
   return (
     <StyledSection>
-      <CollectionContainer>
-        {collections.map((collection) => (
-          <CollectionItem
-            key={collection.id}
-            removeCollection={() => removeCollection(collection.id)}
-            onCollection={() => onSelectedCollection(collection)}
-            removable={true}
-          >
-            {collection.name}
-          </CollectionItem>
-        ))}
-      </CollectionContainer>
+      <StyledButton
+        onClick={() => {
+          setEditMode((editable) => !editable);
+        }}
+      >
+        Create new collection
+      </StyledButton>
+      {editMode && (
+        <CollectionForm
+          onSubmit={handleSubmit}
+          editMode={editMode}
+          setEditMode={setEditMode}
+        />
+      )}
+      {!editMode && (
+        <CollectionContainer>
+          {collections.map((collection) => (
+            <CollectionItem
+              key={collection.id}
+              removable={true}
+              removeCollection={() => removeCollection(collection.id)}
+            >
+              <Link href={`/collections/${collection.id}`} passHref>
+                <Anchor>{collection.name}</Anchor>
+              </Link>
+            </CollectionItem>
+          ))}
+        </CollectionContainer>
+      )}
     </StyledSection>
   );
 }
 
 const StyledSection = styled.section`
-  position: relative;
+  text-align: center;
 `;
 
-const StyledButton = styled.button`
-  width: 5rem;
-  height: 2rem;
-  border-radius: 5px;
-  background: var(--background-primary);
-  box-shadow: 3px 2px 3px 2px var(--line-color);
-  border: var(--line-color);
+const StyledButton = styled(Button)`
+  background-color: #d8c9ad;
+  padding: 15px;
+  margin: 10px 0;
 `;
 
 const CollectionContainer = styled.ul`
   list-style: none;
+  padding-inline-start: 0;
+`;
+
+const Anchor = styled.a`
+  text-decoration: none;
 `;

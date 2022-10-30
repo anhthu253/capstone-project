@@ -11,7 +11,7 @@ export default function ComponentItem({
       <span onClick={onCollection}>{children}</span>
       <StyledIcon
         visible={removable}
-        icon="clarity:remove-line"
+        icon="akar-icons:chat-remove"
         onClick={removeCollection}
       />
     </StyledColItem>

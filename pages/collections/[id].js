@@ -24,7 +24,7 @@ export default function Collection({ collection }) {
       {collection.length > 0 && (
         <StyledH2>{collection[0].collectionName}</StyledH2>
       )}
-      <ArticleListContainer articles={collection} />
+      <ArticleListContainer currentArticles={collection} delible={true} />
     </StyledSection>
   );
 }

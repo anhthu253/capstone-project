@@ -14,7 +14,7 @@ export async function getAllFavouriteArticles() {
     fullContent: favArticle.fullContent,
     url: favArticle.url,
     urlToImage: favArticle.urlToImage,
-    collectionId: favArticle.collectionId.toString(),
+    collectionId: favArticle.collectionId,
   }));
 
   return sanitizedFavArticles;

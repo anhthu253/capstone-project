@@ -4,7 +4,7 @@ export default function CollectionForm({ editMode, setEditMode, onSubmit }) {
   return (
     <StyledForm onSubmit={onSubmit}>
       <StyledDiv>
-        <StyledInput name="name" id="name" placeholder="Name" />
+        <StyledInput name="name" id="name" placeholder="Name" required />
         <StyledTextArea
           rows="3"
           name="description"

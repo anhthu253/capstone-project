@@ -7,7 +7,7 @@ export default async function handler(request, response) {
     case "DELETE":
       await FavouriteArticle.findByIdAndDelete(id);
       return response
-        .status(201)
+        .status(200)
         .json({ message: "Article deleted", deletedId: id });
 
     default:

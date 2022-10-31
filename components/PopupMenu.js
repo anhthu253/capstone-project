@@ -40,7 +40,6 @@ export default function PopupMenu({
       });
       const createdCollection = await response.json();
       saveArticle2DB(createdCollection.createdId);
-      reloadCollections();
     } catch (error) {
       console.error(error);
     }
@@ -50,19 +49,9 @@ export default function PopupMenu({
     const { id, ...articleDB } = article;
     try {
       const response = await fetch("/api/article", {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify({ ...articleDB, collectionId: collectionId }),
       });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function reloadCollections() {
-    try {
-      const response = await fetch(`/api/collection`);
-      const cols = await response.json();
-      setCollections(cols);
     } catch (error) {
       console.error(error);
     }

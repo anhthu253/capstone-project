@@ -7,9 +7,8 @@ export default async function handler(request, response) {
     case "GET":
       const allFavArticles = await getAllFavouriteArticles();
       return response.status(200).json(allFavArticles);
-    case "POST":
+    case "PUT":
       const article = JSON.parse(request.body);
-      //const newFavArticle = await FavouriteArticle.create(article);
       const {
         url,
         urlToImage,

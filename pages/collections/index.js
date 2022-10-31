@@ -35,11 +35,10 @@ export default function Collections({ currentCollections }) {
       description: description,
     };
     try {
-      const response = await fetch("/api/collection", {
+      await fetch("/api/collection", {
         method: "POST",
         body: JSON.stringify(newCollection),
       });
-      const createdCollection = await response.json();
       reloadCollections();
     } catch (error) {
       console.error(error);

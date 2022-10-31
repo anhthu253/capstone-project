@@ -9,13 +9,13 @@ export default function ArticleListContainer({ currentArticles, delible }) {
       const response = await fetch(`/api/article/${articleId}`, {
         method: "DELETE",
       });
-      reloadArticle();
+      reloadArticles();
     } catch (error) {
       console.error(error);
     }
   }
 
-  async function reloadArticle() {
+  async function reloadArticles() {
     try {
       const response = await fetch(`/api/article`);
       const favArticles = await response.json();

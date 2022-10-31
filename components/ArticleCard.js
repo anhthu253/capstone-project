@@ -1,25 +1,30 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useStore } from "../hooks/useStore";
+import { Icon } from "@iconify/react";
 
-export default function ArticleCard({ article }) {
+export default function ArticleCard({ article, delible, onDelete }) {
   const { url, urlToImage, title, author, description, message, alert } =
     article;
   const router = useRouter();
   const setCurrentArticle = useStore((state) => state.setCurrentArticle);
   async function getFullContent() {
     if (!article.isSaved) {
-      //if not yet fetched
-      const response = await fetch(`/api/search/article?url=${url}`);
-      const data = await response.json();
-      setCurrentArticle({
-        ...article,
-        fullContent: data,
-        isSaved: false,
-      });
+      try {
+        const response = await fetch(`/api/search/article?url=${url}`);
+        const data = await response.json();
+        setCurrentArticle({
+          ...article,
+          fullContent: data,
+          isSaved: false,
+        });
+      } catch (error) {
+        console.error(error);
+      }
     } else setCurrentArticle(article);
     router.push(`/content`);
   }
+
   return (
     <li>
       {alert ? (
@@ -30,14 +35,19 @@ export default function ArticleCard({ article }) {
         )
       ) : (
         <StyledCard>
-          <div>
-            <img
-              src={urlToImage}
-              alt="article image"
-              width="250"
-              height="150"
-            ></img>
-          </div>
+          {delible && (
+            <StyledIcon
+              icon="akar-icons:chat-remove"
+              width="25"
+              onClick={onDelete}
+            />
+          )}
+          <img
+            src={urlToImage}
+            alt="article image"
+            width="250"
+            height="150"
+          ></img>
 
           <article>
             <Title onClick={getFullContent}>{title}</Title>
@@ -50,6 +60,14 @@ export default function ArticleCard({ article }) {
   );
 }
 
+const StyledIcon = styled(Icon)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 const Title = styled.h3`
   &:hover {
     cursor: pointer;
@@ -66,6 +84,7 @@ const Description = styled.p`
 `;
 
 const StyledCard = styled.section`
+  position: relative;
   display: flex;
   flex-flow: row wrap;
   gap: 20px;

@@ -27,6 +27,16 @@ const GlobalStyle = createGlobalStyle`
       U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
       U+FEFF, U+FFFD;
   }
+
+  /* pirata-one-regular - latin */
+@font-face {
+  font-family: 'Pirata One';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('../fonts/pirata-one-v22-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/pirata-one-v22-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
   
   /* unifrakturmaguntia-regular - latin */
   @font-face {
@@ -38,24 +48,14 @@ const GlobalStyle = createGlobalStyle`
       url("/fonts/unifrakturmaguntia-v16-latin-regular.woff") format("woff");
   }
   
-  /* pirata-one-regular - latin */
+  /* ephesis-regular - latin */
   @font-face {
-    font-family: "Pirata One";
+    font-family: 'Ephesis';
     font-style: normal;
     font-weight: 400;
-    src: local(""),
-      url("/fonts/pirata-one-v22-latin-regular.woff2") format("woff2"),
-      url("/fonts/pirata-one-v22-latin-regular.woff") format("woff");
-  }
-  
-  /* gothic-a1-regular - latin */
-  @font-face {
-    font-family: "Gothic A1";
-    font-style: normal;
-    font-weight: 400;
-    src: local(""),
-      url("/fonts/gothic-a1-v13-latin-regular.woff2") format("woff2"),
-      url("/fonts/gothic-a1-v13-latin-regular.woff") format("woff");
+    src: local(''),
+         url('../fonts/ephesis-v7-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+         url('../fonts/ephesis-v7-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
   }
   /* gothic-a1-regular - latin */
   @font-face {
@@ -66,28 +66,14 @@ const GlobalStyle = createGlobalStyle`
          url('../fonts/gothic-a1-v13-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
          url('../fonts/gothic-a1-v13-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
   }
-  /* gothic-a1-500 - latin */
-  @font-face {
-    font-family: 'Gothic A1';
-    font-style: normal;
-    font-weight: 500;
-    src: local(''),
-         url('../fonts/gothic-a1-v13-latin-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-         url('../fonts/gothic-a1-v13-latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-  }
+
   
   body {
     display:flex;
-    font-family: "Gothic A1";
-    font-weight: 400;
+    font-family: 'Gothic A1';
     margin: 0;
     background-image: url("/images/background-paper.jpg");
     color: var(--text-color);
-    padding: 3rem;
-  }
-  
-  h1 {
-    font-family: "Pirata One";
   }
 
 `;

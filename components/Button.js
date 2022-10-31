@@ -1,14 +1,15 @@
 import styled from "styled-components";
 
-export default function Button({ children, className }) {
-  return <StyledButton className={className}>{children}</StyledButton>;
+export default function Button({ children, className, type, onClick }) {
+  return (
+    <StyledButton className={className} type={type} onClick={onClick}>
+      {children}
+    </StyledButton>
+  );
 }
 
 const StyledButton = styled.button`
-  width: 5rem;
-  height: 2rem;
-  border-radius: 5px;
-  background: var(--background-primary);
-  box-shadow: 3px 2px 3px 2px var(--line-color);
-  border: var(--line-color);
+  padding: 5px 15px;
+  border-radius: 4px;
+  border: var(--line-secondary);
 `;

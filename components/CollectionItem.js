@@ -11,7 +11,7 @@ export default function ComponentItem({
       <span onClick={onCollection}>{children}</span>
       <StyledIcon
         visible={removable}
-        icon="clarity:remove-line"
+        icon="akar-icons:chat-remove"
         onClick={removeCollection}
       />
     </StyledColItem>
@@ -20,8 +20,8 @@ export default function ComponentItem({
 
 const StyledColItem = styled.li`
   display: flex;
-  justify-content: flex-start;
-  gap: 10px;
+  justify-content: space-between;
+  padding: 5px;
   &:hover {
     cursor: pointer;
   }

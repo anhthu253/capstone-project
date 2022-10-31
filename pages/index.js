@@ -4,5 +4,5 @@ import { useStore } from "../hooks/useStore";
 export default function Home() {
   const articles = useStore((state) => state.articles);
 
-  return <ArticleListContainer articles={articles} />;
+  return <ArticleListContainer currentArticles={articles} />;
 }

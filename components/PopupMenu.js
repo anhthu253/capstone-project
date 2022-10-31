@@ -1,99 +1,121 @@
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
-import { useState, useEffect } from "react";
-import { useStore } from "../hooks/useStore";
+import { useState } from "react";
 import CollectionItem from "./CollectionItem";
-export default function PopupMenu({ popUp, setPopUp, article }) {
+import CollectionForm from "./CollectionForm";
+import Button from "./Button";
+
+export default function PopupMenu({
+  popUp,
+  setPopUp,
+  currentCollections,
+  article,
+}) {
   const [editMode, setEditMode] = useState(false);
-  const addCollection = useStore((state) => state.addCollection);
-  const collections = useStore((state) => state.collections);
-  const add2Collection = useStore((state) => state.add2Collection);
+  const [collections, setCollections] = useState(currentCollections);
 
   function handleSubmit(event) {
     event.preventDefault();
     const formdata = new FormData(event.target);
     const data = Object.fromEntries(formdata);
-    addCollection({
-      id: Math.random().toString(36).substring(2),
-      name: data.name,
-      description: data.description,
-      articles: [],
-    });
-
-    setEditMode(false);
+    saveCollection2DB(data);
+    setPopUp(false);
   }
 
-  function onSelectedCollection(id) {
-    add2Collection(article, id);
+  function onSelectedCollection(collectionId) {
+    saveArticle2DB(collectionId);
     setPopUp(false);
+  }
+
+  async function saveCollection2DB(collection) {
+    const { name, description } = collection;
+    const newCollection = {
+      name: name,
+      description: description,
+    };
+    try {
+      const response = await fetch("/api/collection", {
+        method: "POST",
+        body: JSON.stringify(newCollection),
+      });
+      const createdCollection = await response.json();
+      saveArticle2DB(createdCollection.createdId);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function saveArticle2DB(collectionId) {
+    const { id, ...articleDB } = article;
+    try {
+      const response = await fetch("/api/article", {
+        method: "PUT",
+        body: JSON.stringify({ ...articleDB, collectionId: collectionId }),
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
     <StyledDiv>
-      <StyledBack onClick={() => setPopUp(false)}>
-        <StyledIcon icon="eva:arrow-back-outline" />
-      </StyledBack>
-      <StyledButton
-        onClick={() => {
-          setEditMode((editable) => !editable);
-        }}
-      >
-        Create new collection
-      </StyledButton>
-      {editMode && (
-        <StyledForm onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="name">Name </label>
-            <input name="name" id="name" />
-          </div>
-          <div>
-            <label htmlFor="description">Description </label>
-            <textarea name="description" id="description" />
-          </div>
-          <ButtonContainer>
-            <button
-              onClick={() => {
-                setEditMode(false);
-              }}
-            >
-              Cancel
-            </button>
-            <button type="submit">Create</button>
-          </ButtonContainer>
-        </StyledForm>
-      )}
-      <CollectionContainer>
-        {!editMode &&
-          collections.map((collection) => (
-            <CollectionItem
-              key={collection.id}
-              removeCollection={() => {}}
-              onCollection={() => onSelectedCollection(collection.id)}
-              removable={false}
-            >
-              {collection.name}
-            </CollectionItem>
-          ))}
-      </CollectionContainer>
+      <StyledSection>
+        <StyledButton
+          onClick={() => {
+            setEditMode((editable) => !editable);
+          }}
+        >
+          Create new collection
+        </StyledButton>
+        {editMode && (
+          <CollectionForm
+            onSubmit={handleSubmit}
+            editMode={editMode}
+            setEditMode={setEditMode}
+          />
+        )}
+        <CollectionContainer>
+          {!editMode &&
+            collections.map((collection) => (
+              <CollectionItem
+                key={collection.id}
+                removeCollection={() => {}}
+                onCollection={() => onSelectedCollection(collection.id)}
+                removable={false}
+              >
+                {collection.name}
+              </CollectionItem>
+            ))}
+        </CollectionContainer>
+      </StyledSection>
+      <Back onClick={() => setPopUp(false)}>
+        <StyledIcon icon="fluent:arrow-exit-20-regular" width="25" />
+      </Back>
     </StyledDiv>
   );
 }
 
 const StyledDiv = styled.div`
-  width: 50%;
-  min-height: 300px;
   position: absolute;
   right: 0;
   top: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 50%;
+  min-height: 300px;
   background-image: url("/images/background-paper.jpg");
-  box-shadow: 3px 2px 3px 2px #838586;
+  box-shadow: 5px 5px 5px 5px #838586;
   padding: 10px;
-  text-align: center;
+  z-index: 9999;
 `;
 
-const StyledBack = styled.div`
-  text-align: left;
-  margin-bottom: 15px;
+const StyledSection = styled.section`
+  grid-column: 2;
+  text-align: center;
+`;
+const Back = styled.section`
+  grid-column: 3;
+  text-align: right;
 `;
 
 const StyledIcon = styled(Icon)`
@@ -102,30 +124,17 @@ const StyledIcon = styled(Icon)`
   }
 `;
 
-const StyledButton = styled.button`
-  height: 3rem;
-  padding: 5px;
-  background: #d8c9ad;
-  margin-bottom: 10px;
-`;
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  margin: 0 auto;
-  gap: 10px;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  gap: 10px;
+const StyledButton = styled(Button)`
+  background-color: #d8c9ad;
+  padding: 15px;
+  margin: 10px 0;
 `;
 
 const CollectionContainer = styled.ul`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
   list-style: none;
+  padding-inline-start: 0;
 `;

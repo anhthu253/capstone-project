@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
-export default function TextEntry({ label, id, value, name, placeholder }) {
+export default function TextEntry({
+  label,
+  id,
+  value,
+  name,
+  type,
+  placeholder,
+}) {
   return (
     <StyledTextEntry>
       <label htmlFor={id}>{label}</label>
@@ -8,6 +15,7 @@ export default function TextEntry({ label, id, value, name, placeholder }) {
         id={id}
         value={value}
         name={name}
+        type={type}
         placeholder={placeholder}
       ></StyledInput>
     </StyledTextEntry>

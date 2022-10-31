@@ -1,27 +1,44 @@
-import articles from "../lib/db";
-export async function getAllArticles() {
-  return articles;
-}
-export async function getArticlesById(id) {
-  return articles.find((article) => article.id === id);
+import dbConnect from "../lib/dbConnect";
+import FavouriteArticle from "../models/FavouriteArticle";
+
+export async function getAllFavouriteArticles() {
+  await dbConnect();
+
+  const favArticles = await FavouriteArticle.find();
+
+  const sanitizedFavArticles = favArticles.map((favArticle) => ({
+    id: favArticle.id,
+    title: favArticle.title,
+    author: favArticle.author,
+    description: favArticle.description,
+    fullContent: favArticle.fullContent,
+    url: favArticle.url,
+    urlToImage: favArticle.urlToImage,
+    collectionId: favArticle.collectionId,
+  }));
+
+  return sanitizedFavArticles;
 }
 
-export async function getArticlesByKeywords(thema, source, when, country) {
-  return articles
-    .filter((article) =>
-      thema === "" ? true : article.thema.toLowerCase() === thema.toLowerCase()
-    )
-    .filter((article) =>
-      source === ""
-        ? true
-        : article.source.toLowerCase() === source.toLowerCase()
-    )
-    .filter((article) =>
-      when === "" ? true : article.when.toLowerCase() === when.toLowerCase()
-    )
-    .filter((article) =>
-      country === ""
-        ? true
-        : article.country.toLowerCase() === country.toLowerCase()
-    );
+export async function getArticlesByCollectionId(id) {
+  await dbConnect();
+
+  const articles = await FavouriteArticle.find({ collectionId: id }).populate(
+    "collectionId",
+    "name"
+  );
+
+  const sanitizedArticlesByColId = articles.map((article) => ({
+    id: article.id,
+    title: article.title,
+    description: article.description,
+    fullContent: article.fullContent,
+    url: article.url,
+    urlToImage: article.urlToImage,
+    isSaved: true,
+    collectionId: article.collectionId.toString(),
+    collectionName: article.collectionId.name,
+  }));
+
+  return sanitizedArticlesByColId;
 }

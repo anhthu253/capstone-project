@@ -2,7 +2,11 @@ import styled from "styled-components";
 import ArticleCard from "./ArticleCard";
 import { useState } from "react";
 
-export default function ArticleListContainer({ currentArticles, delible }) {
+export default function ArticleListContainer({
+  currentArticles,
+  collectionId,
+  delible,
+}) {
   const [articles, setArticles] = useState(currentArticles);
   async function deleteArticle(articleId) {
     try {
@@ -17,7 +21,7 @@ export default function ArticleListContainer({ currentArticles, delible }) {
 
   async function reloadArticles() {
     try {
-      const response = await fetch(`/api/article`);
+      const response = await fetch(`/api/collection/${collectionId}`);
       const favArticles = await response.json();
       setArticles(favArticles);
     } catch (error) {

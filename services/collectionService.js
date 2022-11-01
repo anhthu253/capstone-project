@@ -14,3 +14,17 @@ export async function getAllCollections() {
 
   return sanitizedCollections;
 }
+
+export async function getCollectionById(id) {
+  await dbConnect();
+
+  const col = await Collection.findById(id);
+
+  const sanitizedCollection = {
+    id: col.id,
+    name: col.name,
+    description: col.description,
+  };
+
+  return sanitizedCollection;
+}

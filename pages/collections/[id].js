@@ -3,28 +3,36 @@ import styled from "styled-components";
 import Link from "next/link";
 import { getArticlesByCollectionId } from "../../services/articleService";
 import Button from "../../components/Button";
+import { getCollectionById } from "../../services/collectionService";
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
-  const collection = await getArticlesByCollectionId(id);
+  const articles = await getArticlesByCollectionId(id);
+  const collection = await getCollectionById(id);
 
   return {
     props: {
-      collection,
+      collectionId: id,
+      articles: articles,
+      collectionName: collection.name,
     },
   };
 }
 
-export default function Collection({ collection }) {
+export default function Collection({ collectionId, articles, collectionName }) {
   return (
     <StyledSection>
       <Link href="/collections" passHref>
         <StyledButton>Back</StyledButton>
       </Link>
-      {collection.length > 0 && (
-        <StyledH2>{collection[0].collectionName}</StyledH2>
-      )}
-      <ArticleListContainer currentArticles={collection} delible={true} />
+
+      <StyledH2>{collectionName}</StyledH2>
+
+      <ArticleListContainer
+        currentArticles={articles}
+        collectionId={collectionId}
+        delible={true}
+      />
     </StyledSection>
   );
 }

@@ -36,7 +36,7 @@ export async function getArticlesByCollectionId(id) {
     url: article.url,
     urlToImage: article.urlToImage,
     isSaved: true,
-    collectionId: article.collectionId.toString(),
+    collectionId: article.collectionId.id.toString(),
     collectionName: article.collectionId.name,
   }));
 

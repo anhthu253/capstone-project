@@ -32,13 +32,7 @@ export default function Content({ currentCollections }) {
         />
       )}
       <StyledSection blur={popUp}>
-        <Link
-          href={
-            currentArticle.isSaved
-              ? `/collections/${currentArticle.collectionId}`
-              : "/"
-          }
-        >
+        <Link href={currentArticle.isSaved ? `/collections` : "/"}>
           <StyledButton>Back</StyledButton>
         </Link>
 

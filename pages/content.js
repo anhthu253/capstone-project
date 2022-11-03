@@ -6,7 +6,6 @@ import Link from "next/link";
 import PopupMenu from "../components/PopupMenu";
 import { getAllCollections } from "../services/collectionService";
 import Button from "../components/Button";
-import SelectableText from "react-selectable-text";
 
 export async function getServerSideProps() {
   const currentCollections = await getAllCollections();

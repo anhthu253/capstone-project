@@ -6,6 +6,7 @@ import Link from "next/link";
 import PopupMenu from "../components/PopupMenu";
 import { getAllCollections } from "../services/collectionService";
 import Button from "../components/Button";
+import SelectableText from "react-selectable-text";
 
 export async function getServerSideProps() {
   const currentCollections = await getAllCollections();
@@ -21,6 +22,25 @@ export default function Content({ currentCollections }) {
   const currentArticle = useStore((state) => state.currentArticle);
   const [popUp, setPopUp] = useState(false);
 
+  function highLight(event) {
+    if (!window.getSelection) return; //if no selection
+    if (window.getSelection().toString().length == 0) return;
+    if (event.detail === 2) return; // double mouse click
+    const range = window.getSelection().getRangeAt(0);
+    const span = document.createElement("span");
+    span.classList.add(".highlight");
+    span.style.backgroundColor = "#FFFF00";
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
+
+    //remove highlight by double clicking on it
+    span.addEventListener("dblclick", (event) => {
+      span.style.userSelect = "none";
+      span.classList.remove(".highlight");
+      span.style.backgroundColor = "transparent";
+    });
+  }
+
   return (
     <StyledMain>
       {popUp && (
@@ -32,7 +52,9 @@ export default function Content({ currentCollections }) {
         />
       )}
       <StyledSection blur={popUp}>
-        <Link href={currentArticle.isSaved ? `/collections` : "/"}>
+        <Link
+          href={currentArticle.isSaved ? `/collections/${collectionId}` : "/"}
+        >
           <StyledButton>Back</StyledButton>
         </Link>
 
@@ -46,8 +68,9 @@ export default function Content({ currentCollections }) {
         )}
         <h3>{currentArticle.title}</h3>
         <StyledContent
+          onMouseUp={highLight}
           dangerouslySetInnerHTML={{ __html: currentArticle.fullContent }}
-        ></StyledContent>
+        />
       </StyledSection>
     </StyledMain>
   );

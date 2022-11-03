@@ -33,10 +33,11 @@ export default function Content({ currentCollections }) {
     range.insertNode(span);
 
     //remove highlight by double clicking on it
-    span.addEventListener("dblclick", (event) => {
+    span.addEventListener("dblclick", () => {
       span.style.userSelect = "none";
-      span.classList.remove(".highlight");
       span.style.backgroundColor = "transparent";
+      window.getSelection().removeRange(range);
+      span.remove();
     });
   }
 
@@ -52,7 +53,11 @@ export default function Content({ currentCollections }) {
       )}
       <StyledSection blur={popUp}>
         <Link
-          href={currentArticle.isSaved ? `/collections/${collectionId}` : "/"}
+          href={
+            currentArticle.isSaved
+              ? `/collections/${currentArticle.collectionId}`
+              : "/"
+          }
         >
           <StyledButton>Back</StyledButton>
         </Link>

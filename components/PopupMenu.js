@@ -47,6 +47,7 @@ export default function PopupMenu({
 
   async function saveArticle2DB(collectionId) {
     const { id, ...articleDB } = article;
+    if (id === undefined) return;
     try {
       const response = await fetch("/api/article", {
         method: "PUT",

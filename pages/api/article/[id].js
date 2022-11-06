@@ -9,6 +9,15 @@ export default async function handler(request, response) {
       return response
         .status(200)
         .json({ message: "Article deleted", deletedId: id });
+    case "PUT":
+      const article = JSON.parse(request.body);
+      await FavouriteArticle.findByIdAndUpdate(
+        { _id: article.id },
+        { fullContent: article.fullContent }
+      );
+      return response
+        .status(200)
+        .json({ message: "Article updated", updatedId: id });
 
     default:
       return response

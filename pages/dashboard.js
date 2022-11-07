@@ -116,6 +116,7 @@ export default function Dashboard() {
       {colorPalette.display && (
         <ColorPalette
           id="ColorPalette"
+          key={Math.random().toString(36).substring(2)}
           top={colorPalette.posY}
           left={colorPalette.posX}
         >
@@ -127,7 +128,6 @@ export default function Dashboard() {
           ))}
         </ColorPalette>
       )}
-
       <DragContainer
         id="DraggableContainer"
         draglist={draggableItems}

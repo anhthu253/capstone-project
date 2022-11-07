@@ -147,7 +147,7 @@ export default function Dashboard() {
 
       <DropzoneContainer>
         {dropzones.map((dropzone) => (
-          <DZWrapper key="wrapper">
+          <DZWrapper key={Math.random().toString(36).substring(2)}>
             <Dropzone
               key={dropzone.id}
               ondragover={(event) => {

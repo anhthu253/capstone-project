@@ -1,5 +1,5 @@
 import { useStore } from "../hooks/useStore";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Icon } from "@iconify/react";
 import styled from "styled-components";
 import Link from "next/link";
@@ -20,44 +20,16 @@ export async function getServerSideProps() {
 export default function Content({ currentCollections }) {
   const currentArticle = useStore((state) => state.currentArticle);
   const [popUp, setPopUp] = useState(false);
-  const [selections, setSelections] = useState([]);
+  const contentRef = useRef();
 
   function restoreHighlightRemoveEvent() {
     const spans = document.querySelectorAll(".highlight");
     spans.forEach((span) => span.addEventListener("dblclick", removeHighlight));
   }
 
-  function isSelectionOverlap(newRange, oldRange) {
-    //check if the new selection is in the same paragraphs with the previoous ones
-    if (newRange.commonAncestorContainer !== oldRange.commonAncestorContainer)
-      return false;
-
-    if (
-      newRange.startOffset > oldRange.startOffset &&
-      newRange.startOffset < oldRange.endOffset
-    )
-      return true;
-
-    if (
-      newRange.endOffset > oldRange.startOffset &&
-      newRange.endOffset < oldRange.endOffset
-    )
-      return true;
-
-    if (
-      newRange.startOffset < oldRange.startOffset &&
-      newRange.endOffset > oldRange.endOffset
-    )
-      return true;
-
-    return false;
-  }
-
   //update document with highlights to database
-  async function saveSelection2DB() {
-    const updatedContent = document.querySelector(
-      ".articleFullContent"
-    ).innerHTML;
+  async function saveSelectionToDB() {
+    const updatedContent = contentRef.current.innerHTML;
     try {
       const response = await fetch(`/api/article/${currentArticle.id}`, {
         method: "PUT",
@@ -73,60 +45,59 @@ export default function Content({ currentCollections }) {
 
   function removeHighlight(event) {
     const span = event.target;
-    span.classList.remove(".highlight");
-    const text = span.textContent;
-    span.replaceWith(text);
-    setSelections((prevSels) =>
-      prevSels.filter(
-        (prevSel) => span.getAttribute("id") != prevSel.span.getAttribute("id")
-      )
-    );
+    const content = span.innerHTML;
+    span.replaceWith(content);
   }
 
   function highLight(event) {
-    const sel = window.getSelection();
-
-    if (!sel) return; //if no selection
-    if (sel.toString().length == 0) return;
+    const selection = window.getSelection();
+    if (!selection) return; //if no selection
+    if (selection.toString().length === 0) return;
     if (event.detail === 2) return; // double mouse click
-    const range = window.getSelection().getRangeAt(0);
-    if (
-      range.commonAncestorContainer.tagName !== undefined &&
-      range.commonAncestorContainer.tagName !== "P" &&
-      range.commonAncestorContainer.tagName !== "SPAN"
-    ) {
+
+    const range = selection.getRangeAt(0);
+    if (range.commonAncestorContainer.tagName === "DIV") {
       window.alert("Selection over several paragraph is not allowed");
       return;
     }
-    if (
-      selections.length > 0 &&
-      selections.find((prevSelection) =>
-        isSelectionOverlap(range, prevSelection.range)
-      )
-    ) {
-      window.alert("Selections should not overlap each other");
+
+    const childrenArray =
+      event.target.children === undefined ? [] : [...event.target.children];
+    if (childrenArray.find((node) => node.className === "highlight")) {
+      window.alert(
+        "Only one selection is allowed in a paragraph. Please remove the last one first before making another selection"
+      );
       return;
     }
+
     const span = document.createElement("span");
     span.classList.add("highlight");
-    span.setAttribute("id", Math.random().toString(36).substring(2));
     span.style.backgroundColor = "yellow";
     span.appendChild(range.extractContents());
     range.insertNode(span);
-    setSelections((prevSels) => [...prevSels, { span, range }]);
 
     //remove highlight by double clicking on it
     span.addEventListener("dblclick", removeHighlight);
   }
 
   useEffect(() => {
-    const allParagraph = document.querySelectorAll("p");
-    allParagraph.forEach((p) =>
+    const allParagraphs = document.querySelectorAll("p");
+    allParagraphs.forEach((p) =>
       p.setAttribute("id", "text" + Math.random().toString(36).substring(2))
     );
     restoreHighlightRemoveEvent();
   }, []);
 
+  useEffect(() => {
+    /*   const allhighlights = contentRef.current.querySelectorAll(".highlight");
+    console.log("allhighlights", allhighlights);
+
+    allhighlights.forEach((hl) => {
+      hl.addEventListener("dbclick", removeHighlight);
+    }); */
+
+    restoreHighlightRemoveEvent();
+  }, [contentRef.current?.innerHTML]);
   return (
     <StyledMain>
       {popUp && (
@@ -148,8 +119,8 @@ export default function Content({ currentCollections }) {
           <StyledButton>Back</StyledButton>
         </Link>
 
-        {selections.length > 0 && currentArticle.isSaved && (
-          <StyledButton onClick={saveSelection2DB}>
+        {currentArticle.isSaved && (
+          <StyledButton onClick={saveSelectionToDB}>
             Save highlights
           </StyledButton>
         )}
@@ -164,6 +135,7 @@ export default function Content({ currentCollections }) {
         <h3>{currentArticle.title}</h3>
         <StyledContent
           className="articleFullContent"
+          ref={contentRef}
           onMouseUp={highLight}
           dangerouslySetInnerHTML={{ __html: currentArticle.fullContent }}
         />

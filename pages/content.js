@@ -88,16 +88,6 @@ export default function Content({ currentCollections }) {
     restoreHighlightRemoveEvent();
   }, []);
 
-  useEffect(() => {
-    /*   const allhighlights = contentRef.current.querySelectorAll(".highlight");
-    console.log("allhighlights", allhighlights);
-
-    allhighlights.forEach((hl) => {
-      hl.addEventListener("dbclick", removeHighlight);
-    }); */
-
-    restoreHighlightRemoveEvent();
-  }, [contentRef.current?.innerHTML]);
   return (
     <StyledMain>
       {popUp && (

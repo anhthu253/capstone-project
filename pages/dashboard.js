@@ -33,7 +33,13 @@ const draglist = [
   },
 ];
 
-const colorSet = ["transparent", "#E8E19C", "#A5E89C", "#9CD0E8", "#E194B8"];
+const colorSet = [
+  { id: "5454", color: "transparent" },
+  { id: "87", color: "#E8E19C" },
+  { id: "987", color: "#A5E89C" },
+  { id: "986", color: "#9CD0E8" },
+  { id: "455", color: "#E194B8" },
+];
 const MAX_DROP_ITEMS = 4;
 
 export default function Dashboard() {
@@ -121,9 +127,9 @@ export default function Dashboard() {
         >
           {colorSet.map((color) => (
             <ColorBox
-              key={Math.random().toString(36).substring(2)}
-              background={color}
-              onChooseColor={() => chooseColor(color)}
+              key={color.id}
+              background={color.color}
+              onChooseColor={() => chooseColor(color.color)}
             />
           ))}
         </ColorPalette>
@@ -141,7 +147,7 @@ export default function Dashboard() {
 
       <DropzoneContainer>
         {dropzones.map((dropzone) => (
-          <DZWrapper>
+          <DZWrapper key="wrapper">
             <Dropzone
               key={dropzone.id}
               ondragover={(event) => {
@@ -153,7 +159,7 @@ export default function Dashboard() {
               }}
             ></Dropzone>
             <StyledIcons>
-              <Icon icon="fluent:save-20-filled" width="25"></Icon>
+              {/*  <Icon icon="fluent:save-20-filled" width="25"></Icon> */}
               <Icon
                 icon="eva:file-remove-fill"
                 width="25"

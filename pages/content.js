@@ -42,6 +42,13 @@ export default function Content({ currentCollections }) {
       console.error(error);
     }
   }
+
+  //check which paragraph  is the node's ancestor
+  function whichParagraph(node) {
+    if (!node.id) return "";
+    if (node.id.startsWith("text")) return node.id;
+    return whichParagraph(node?.parentNode);
+  }
   function removeHighlight(event) {
     const span = event.target;
     const parent = span.parentNode;
@@ -59,19 +66,12 @@ export default function Content({ currentCollections }) {
 
     const range = selection.getRangeAt(0);
 
-    //check if the selection starts inside a child element in the paragraph
-    const pStartContainerId = range.startContainer.parentNode.id.startsWith(
-      "text"
-    )
-      ? range.startContainer.parentNode.id
-      : range.startContainer.parentNode.parentNode.id;
-
-    //check if the selection ends inside a child element in the paragraph
-    const pEndContainerId = range.endContainer.parentNode.id.startsWith("text")
-      ? range.endContainer.parentNode.id
-      : range.endContainer.parentNode.parentNode.id;
-
-    if (pStartContainerId != pEndContainerId) {
+    const pStartContainerId = whichParagraph(range.startContainer.parentNode);
+    const pEndContainerId = whichParagraph(range.endContainer.parentNode);
+    if (
+      pStartContainerId !== pEndContainerId ||
+      (pStartContainerId === pEndContainerId && pEndContainerId === "")
+    ) {
       window.alert("Selection over several paragraph is not allowed");
       return;
     }

@@ -58,7 +58,20 @@ export default function Content({ currentCollections }) {
     if (event.detail === 2) return; // double mouse click
 
     const range = selection.getRangeAt(0);
-    if (range.commonAncestorContainer.tagName === "DIV") {
+
+    //check if the selection starts inside a child element in the paragraph
+    const pStartContainerId = range.startContainer.parentNode.id.startsWith(
+      "text"
+    )
+      ? range.startContainer.parentNode.id
+      : range.startContainer.parentNode.parentNode.id;
+
+    //check if the selection ends inside a child element in the paragraph
+    const pEndContainerId = range.endContainer.parentNode.id.startsWith("text")
+      ? range.endContainer.parentNode.id
+      : range.endContainer.parentNode.parentNode.id;
+
+    if (pStartContainerId != pEndContainerId) {
       window.alert("Selection over several paragraph is not allowed");
       return;
     }
@@ -83,9 +96,13 @@ export default function Content({ currentCollections }) {
 
   useEffect(() => {
     const allParagraphs = document.querySelectorAll("p");
-    allParagraphs.forEach((p) =>
-      p.setAttribute("id", "text" + Math.random().toString(36).substring(2))
-    );
+    allParagraphs.forEach((p) => {
+      p.setAttribute("id", "text" + Math.random().toString(36).substring(2));
+      const pChildren = [...p.children] || [];
+      pChildren.forEach((pChild) =>
+        pChild.setAttribute("id", Math.random().toString(36).substring(2))
+      );
+    });
     restoreHighlightRemoveEvent();
   }, []);
 

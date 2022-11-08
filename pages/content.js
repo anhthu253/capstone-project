@@ -42,11 +42,13 @@ export default function Content({ currentCollections }) {
       console.error(error);
     }
   }
-
   function removeHighlight(event) {
     const span = event.target;
-    const content = span.innerHTML;
-    span.replaceWith(content);
+    const parent = span.parentNode;
+    parent.innerHTML = parent?.innerHTML.replace(
+      span.outerHTML,
+      span.innerHTML
+    );
   }
 
   function highLight(event) {
@@ -61,8 +63,7 @@ export default function Content({ currentCollections }) {
       return;
     }
 
-    const childrenArray =
-      event.target.children === undefined ? [] : [...event.target.children];
+    const childrenArray = [...event.target.children] || [];
     if (childrenArray.find((node) => node.className === "highlight")) {
       window.alert(
         "Only one selection is allowed in a paragraph. Please remove the last one first before making another selection"

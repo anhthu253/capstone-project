@@ -115,6 +115,14 @@ export default function Dashboard() {
           return { ...pl, display: false };
         });
     });
+    return () => {
+      document.body.removeEventListener("click", (event) => {
+        if (event.target.id !== "ColorPalette")
+          setColorPalette((pl) => {
+            return { ...pl, display: false };
+          });
+      });
+    };
   }, []);
 
   return (
@@ -147,7 +155,7 @@ export default function Dashboard() {
 
       <DropzoneContainer>
         {dropzones.map((dropzone) => (
-          <DZWrapper key={Math.random().toString(36).substring(2)}>
+          <DZWrapper key={dropzone.id}>
             <Dropzone
               key={dropzone.id}
               ondragover={(event) => {
@@ -159,7 +167,7 @@ export default function Dashboard() {
               }}
             ></Dropzone>
             <StyledIcons>
-              {/*  <Icon icon="fluent:save-20-filled" width="25"></Icon> */}
+              <Icon icon="fluent:save-20-filled" width="25"></Icon>
               <Icon
                 icon="eva:file-remove-fill"
                 width="25"

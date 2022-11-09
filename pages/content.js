@@ -69,7 +69,9 @@ export default function Content({ currentCollections }) {
     const pStartContainerId = whichParagraph(range.startContainer.parentNode);
     const pEndContainerId = whichParagraph(range.endContainer.parentNode);
     if (
-      pStartContainerId !== pEndContainerId ||
+      (pStartContainerId !== pEndContainerId &&
+        pStartContainerId !== "" &&
+        pEndContainerId !== "") ||
       (pStartContainerId === pEndContainerId && pEndContainerId === "")
     ) {
       window.alert("Selection over several paragraph is not allowed");

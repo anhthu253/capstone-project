@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import Button from "../components/Button";
 import ColorBox from "../components/ColorBox";
+import { getAllSelections } from "../services/articleService";
 
 const draglist = [
   {
@@ -65,13 +66,20 @@ const colorSet = [
   { id: "455", color: "#E194B8" },
 ];
 const MAX_DROP_ITEMS = 8;
+export async function getServerSideProps() {
+  const allSelections = await getAllSelections();
+  return {
+    props: {
+      allSelections,
+    },
+  };
+}
 
-export default function Dashboard() {
-  const [draggableItems, setDraggableItems] = useState(draglist);
+export default function Dashboard({ allSelections }) {
+  const [draggableItems, setDraggableItems] = useState(allSelections);
   const [remainDragItemCount, setRemainDragItemCount] = useState(
     draglist.length
   );
-
   const [dropzones, setDropzones] = useState([
     {
       id: Math.random().toString(36).substring(2),
@@ -84,6 +92,7 @@ export default function Dashboard() {
     id: "",
   });
 
+  console.log("all selections", allSelections);
   function openColorPalette(event, id) {
     event.preventDefault();
     setCurrentDraggable({ id: id });

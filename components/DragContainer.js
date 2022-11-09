@@ -24,7 +24,7 @@ export default function DragContainer({
           handleRightClick={(event) => onRightClick(event, item.id)}
           backgroundColor={item.backgroundColor}
         >
-          {item.content}
+          {item.text}
         </Draggable>
       ))}
     </Container>

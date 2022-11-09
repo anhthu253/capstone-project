@@ -20,6 +20,7 @@ export async function getServerSideProps() {
 export default function Content({ currentCollections }) {
   const currentArticle = useStore((state) => state.currentArticle);
   const [popUp, setPopUp] = useState(false);
+  const [selections, setSelections] = useState([]);
   const contentRef = useRef();
 
   function restoreHighlightRemoveEvent() {
@@ -36,6 +37,7 @@ export default function Content({ currentCollections }) {
         body: JSON.stringify({
           ...currentArticle,
           fullContent: updatedContent,
+          selections: selections,
         }),
       });
     } catch (error) {
@@ -57,7 +59,12 @@ export default function Content({ currentCollections }) {
       span.outerHTML,
       span.innerHTML
     );
+    setSelections((prevSelections) =>
+      prevSelections.filter((prevSelection) => prevSelection.id !== span.id)
+    );
   }
+
+  console.log("selectons", selections);
 
   function highLight(event) {
     const selection = window.getSelection();
@@ -91,10 +98,16 @@ export default function Content({ currentCollections }) {
     }
 
     const span = document.createElement("span");
+    const spanID = Math.random().toString(36).substring(2);
+    span.setAttribute("id", spanID);
     span.classList.add("highlight");
     span.style.backgroundColor = "yellow";
     span.appendChild(range.extractContents());
     range.insertNode(span);
+    setSelections((prevSelections) => [
+      ...prevSelections,
+      { id: spanID, text: span.textContent },
+    ]);
 
     //remove highlight by double clicking on it
     span.addEventListener("dblclick", removeHighlight);

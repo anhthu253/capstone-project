@@ -45,10 +45,11 @@ export default function Content({ currentCollections }) {
 
   //check which paragraph  is the node's ancestor
   function whichParagraph(node) {
-    if (!node.id) return "";
-    if (node.id.startsWith("text")) return node.id;
+    if (node === null) return null;
+    if (node.id?.startsWith("text")) return node;
     return whichParagraph(node?.parentNode);
   }
+
   function removeHighlight(event) {
     const span = event.target;
     const parent = span.parentNode;
@@ -66,19 +67,22 @@ export default function Content({ currentCollections }) {
 
     const range = selection.getRangeAt(0);
 
-    const pStartContainerId = whichParagraph(range.startContainer.parentNode);
-    const pEndContainerId = whichParagraph(range.endContainer.parentNode);
-    if (
-      (pStartContainerId !== pEndContainerId &&
-        pStartContainerId !== "" &&
-        pEndContainerId !== "") ||
-      (pStartContainerId === pEndContainerId && pEndContainerId === "")
-    ) {
+    const pStartContainerId =
+      whichParagraph(range.startContainer.parentNode) === null
+        ? null
+        : whichParagraph(range.startContainer.parentNode).id;
+    const pEndContainerId =
+      whichParagraph(range.endContainer.parentNode) === null
+        ? null
+        : whichParagraph(range.endContainer.parentNode).id;
+
+    if (pStartContainerId !== pEndContainerId) {
       window.alert("Selection over several paragraph is not allowed");
       return;
     }
 
-    const childrenArray = [...event.target.children] || [];
+    const ancestorP = whichParagraph(event.target);
+    const childrenArray = [...ancestorP.children] || [];
     if (childrenArray.find((node) => node.className === "highlight")) {
       window.alert(
         "Only one selection is allowed in a paragraph. Please remove the last one first before making another selection"
@@ -100,10 +104,6 @@ export default function Content({ currentCollections }) {
     const allParagraphs = document.querySelectorAll("p");
     allParagraphs.forEach((p) => {
       p.setAttribute("id", "text" + Math.random().toString(36).substring(2));
-      const pChildren = [...p.children] || [];
-      pChildren.forEach((pChild) =>
-        pChild.setAttribute("id", Math.random().toString(36).substring(2))
-      );
     });
     restoreHighlightRemoveEvent();
   }, []);

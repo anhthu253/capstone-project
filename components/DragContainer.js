@@ -35,8 +35,9 @@ const Container = styled.section`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  width: 100wv;
+  width: 100%;
   height: 12rem;
+
   &:empty:not(:focus):before {
     content: attr(data-text);
     opacity: 0.6;

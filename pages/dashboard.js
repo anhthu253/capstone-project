@@ -31,6 +31,30 @@ const draglist = [
       "ned or moved too fast. I think it’s been good and a successful program that we’ve gotten this far this fast. Remember though that we still think there’s a need for ongoing rate increases, a",
     backgroundColor: "transparent",
   },
+  {
+    id: "3671",
+    content:
+      "ay night (8 November) expecting a Republican landslide, as of Wednesday morning we still do not know who will control the Senate or even the House, which Republicans were supposed to win easily. Democrats held on in swing districts in Virginia; they even flipped some in Ohio. And while Florida looks lost from Democrats to Republicans for the foreseeable future, Pennsylvania (where John Fetterman won the Senate race), Wisconsin and Arizona, all of which Biden won in 2020, appear to be at the very least still in play for the party. The Democra",
+    backgroundColor: "transparent",
+  },
+  {
+    id: "9808",
+    content:
+      "use (the latter, at least, will still almost certainly be Republican; midterms are meant to be bad for the party in power). And we will undoubtedly hear competing explanations as to what happened. Some will say moderates were scared off by Donald Trump’s continued dominance of the Republican Party; others, that they lost because he wasn’t on the ballot. There will b",
+    backgroundColor: "transparent",
+  },
+  {
+    id: "0983",
+    content:
+      " reject political debate on right-wing terms. I’m going to take this opportunity to do the same: however Republicans try to spin the results, whatever nonsensical claims of fraud they draw up, their electoral offer was rejected by many who were expected to eagerly vote for it. They put up bad candidates and they ran extremist campaigns. They beat themselves. If they don",
+    backgroundColor: "transparent",
+  },
+  {
+    id: "9084",
+    content:
+      "Midterm elections are meant to be bad for the party in power. Midterms are definitely meant to be bad for the party in power when inflation and gas prices are high and the president isn’t popular with voters",
+    backgroundColor: "transparent",
+  },
 ];
 
 const colorSet = [
@@ -40,7 +64,7 @@ const colorSet = [
   { id: "986", color: "#9CD0E8" },
   { id: "455", color: "#E194B8" },
 ];
-const MAX_DROP_ITEMS = 4;
+const MAX_DROP_ITEMS = 8;
 
 export default function Dashboard() {
   const [draggableItems, setDraggableItems] = useState(draglist);
@@ -51,8 +75,8 @@ export default function Dashboard() {
   const [dropzones, setDropzones] = useState([
     {
       id: Math.random().toString(36).substring(2),
+      text: "Drop here!",
     },
-    { text: "Drop here!" },
   ]);
 
   const [colorPalette, setColorPalette] = useState({});
@@ -107,21 +131,17 @@ export default function Dashboard() {
     setDropzones((dropzones) => dropzones.filter((dz) => dz.id !== id));
   }
 
-  useEffect(() => {
-    //close the color palette by clicking outside it
-    document.body.addEventListener("click", (event) => {
-      if (event.target.id !== "ColorPalette")
-        setColorPalette((pl) => {
-          return { ...pl, display: false };
-        });
-    });
-    return () => {
-      document.body.removeEventListener("click", (event) => {
-        if (event.target.id !== "ColorPalette")
-          setColorPalette((pl) => {
-            return { ...pl, display: false };
-          });
+  //close the color palette by clicking outside it
+  function closeColorPalette(event) {
+    if (event.target.id !== "ColorPalette")
+      setColorPalette((pl) => {
+        return { ...pl, display: false };
       });
+  }
+  useEffect(() => {
+    document.body.addEventListener("click", closeColorPalette);
+    return () => {
+      document.body.removeEventListener("click", closeColorPalette);
     };
   }, []);
 
@@ -168,11 +188,13 @@ export default function Dashboard() {
             ></Dropzone>
             <StyledIcons>
               <Icon icon="fluent:save-20-filled" width="25"></Icon>
-              <Icon
-                icon="eva:file-remove-fill"
-                width="25"
-                onClick={() => removeBoard(dropzone.id)}
-              ></Icon>
+              {dropzones.length > 1 && (
+                <Icon
+                  icon="eva:file-remove-fill"
+                  width="25"
+                  onClick={() => removeBoard(dropzone.id)}
+                ></Icon>
+              )}
             </StyledIcons>
           </DZWrapper>
         ))}

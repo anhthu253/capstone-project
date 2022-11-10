@@ -13,7 +13,7 @@ export default async function handler(request, response) {
       const article = JSON.parse(request.body);
       await FavouriteArticle.findByIdAndUpdate(
         { _id: article.id },
-        { fullContent: article.fullContent }
+        { fullContent: article.fullContent, selections: article.selections }
       );
       return response
         .status(200)

@@ -6,6 +6,7 @@ const favouriteArticleSchema = new Schema({
   author: { type: String, required: false },
   description: { type: String, required: true },
   fullContent: { type: String, required: false },
+  selections: { type: Array, required: false },
   url: { type: String, required: true },
   urlToImage: { type: Array, required: false },
   collectionId: {

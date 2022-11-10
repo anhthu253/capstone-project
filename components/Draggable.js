@@ -33,6 +33,6 @@ const DragBox = styled.span`
   text-overflow: clip;
   overflow: hidden;
   resize: horizontal;
-  background: ${({ color }) => color}
+  background-color: ${({ color }) => color}
   }
 `;

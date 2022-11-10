@@ -12,12 +12,28 @@ export async function getAllFavouriteArticles() {
     author: favArticle.author,
     description: favArticle.description,
     fullContent: favArticle.fullContent,
+    selections: favArticle.selections,
     url: favArticle.url,
     urlToImage: favArticle.urlToImage,
     collectionId: favArticle.collectionId,
   }));
 
   return sanitizedFavArticles;
+}
+
+export async function getAllSelections() {
+  await dbConnect();
+
+  const selections = await FavouriteArticle.find({
+    "selections.0": { $exists: true },
+  });
+  if (selections.length === 0) return [];
+  const sanitizedselections = selections[0].selections.map((selection) => ({
+    id: selection.id,
+    text: selection.text,
+  }));
+
+  return sanitizedselections;
 }
 
 export async function getArticlesByCollectionId(id) {
@@ -33,6 +49,7 @@ export async function getArticlesByCollectionId(id) {
     title: article.title,
     description: article.description,
     fullContent: article.fullContent,
+    selections: article.selections,
     url: article.url,
     urlToImage: article.urlToImage,
     isSaved: true,

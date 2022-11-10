@@ -38,6 +38,7 @@ export default function Content({ currentCollections }) {
           ...currentArticle,
           fullContent: updatedContent,
           selections: selections,
+          //selections: selections,
         }),
       });
     } catch (error) {
@@ -63,8 +64,6 @@ export default function Content({ currentCollections }) {
       prevSelections.filter((prevSelection) => prevSelection.id !== span.id)
     );
   }
-
-  console.log("selectons", selections);
 
   function highLight(event) {
     const selection = window.getSelection();

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import Dropzone from "../components/Dropzone";
 import DragContainer from "../components/DragContainer";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import Link from "next/link";
 import { Icon } from "@iconify/react";
-import Button from "../components/Button";
 import ColorBox from "../components/ColorBox";
 import { getAllSelections } from "../services/articleService";
 
@@ -76,6 +76,7 @@ export async function getServerSideProps() {
 }
 
 export default function Dashboard({ allSelections }) {
+  const dropzoneRef = useRef();
   const [draggableItems, setDraggableItems] = useState(allSelections);
   const [remainDragItemCount, setRemainDragItemCount] = useState(
     draglist.length
@@ -92,7 +93,8 @@ export default function Dashboard({ allSelections }) {
     id: "",
   });
 
-  console.log("all selections", allSelections);
+  const [board, setBoard] = useState([]);
+
   function openColorPalette(event, id) {
     event.preventDefault();
     setCurrentDraggable({ id: id });
@@ -119,6 +121,19 @@ export default function Dashboard({ allSelections }) {
     });
   }
 
+  function setBoardFromDropzone(dropzoneWraper) {
+    const dropzone = dropzoneWraper.firstChild;
+    const dropzoneItems = [...dropzone?.children];
+    const newItems = dropzoneItems.map((item) => {
+      return {
+        id: Math.random().toString(36).substring(2),
+        text: item.textContent,
+        color: getComputedStyle(item).backgroundColor,
+      };
+    });
+    setBoard(newItems);
+  }
+
   function drag(event) {
     event.dataTransfer.setData("text", event.target.id);
   }
@@ -130,16 +145,33 @@ export default function Dashboard({ allSelections }) {
     if (
       event.target.id === "DraggableContainer" ||
       event.target.children.length <= MAX_DROP_ITEMS
-    )
+    ) {
       event.currentTarget.appendChild(
         document.querySelector(`#${CSS.escape(dataID)}`)
       );
+    }
   }
 
   function removeBoard(id) {
     setDropzones((dropzones) => dropzones.filter((dz) => dz.id !== id));
   }
 
+  function clearDropzone(dropzoneWraper) {
+    const dropzone = dropzoneWraper.firstChild;
+    dropzone.innerHTML = "";
+  }
+
+  async function saveBoardToDB() {
+    try {
+      const response = await fetch(`/api/dashboard`, {
+        method: "POST",
+        body: JSON.stringify({ board: board }),
+      });
+      clearDropzone(dropzoneRef.current);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   //close the color palette by clicking outside it
   function closeColorPalette(event) {
     if (event.target.id !== "ColorPalette")
@@ -153,6 +185,10 @@ export default function Dashboard({ allSelections }) {
       document.body.removeEventListener("click", closeColorPalette);
     };
   }, []);
+
+  useEffect(() => {
+    setBoardFromDropzone(dropzoneRef.current);
+  }, [remainDragItemCount, colorPalette]);
 
   return (
     <>
@@ -182,65 +218,52 @@ export default function Dashboard({ allSelections }) {
         onRightClick={(event, id) => openColorPalette(event, id)}
       ></DragContainer>
 
-      <DropzoneContainer>
-        {dropzones.map((dropzone) => (
-          <DZWrapper key={dropzone.id}>
-            <Dropzone
-              key={dropzone.id}
-              ondragover={(event) => {
-                event.preventDefault();
-              }}
-              ondrop={(event) => {
-                drop(event);
-                setRemainDragItemCount((prevCount) => prevCount - 1);
-              }}
-            ></Dropzone>
-            <StyledIcons>
-              <Icon icon="fluent:save-20-filled" width="25"></Icon>
-              {dropzones.length > 1 && (
-                <Icon
-                  icon="eva:file-remove-fill"
-                  width="25"
-                  onClick={() => removeBoard(dropzone.id)}
-                ></Icon>
-              )}
-            </StyledIcons>
-          </DZWrapper>
-        ))}
-        <StyledButton
-          onClick={() => {
-            setDropzones((prevDZ) => [
-              { id: Math.random().toString(36).substring(2) },
-              ...prevDZ,
-            ]);
+      <DZWrapper ref={dropzoneRef}>
+        <Dropzone
+          id={"Dropzone"}
+          ondragover={(event) => {
+            event.preventDefault();
           }}
-        >
-          Add board
-        </StyledButton>
-      </DropzoneContainer>
+          ondrop={(event) => {
+            drop(event);
+            setRemainDragItemCount((prevCount) => prevCount - 1);
+          }}
+        ></Dropzone>
+        <StyledIcons>
+          <Icon
+            icon="fluent:save-20-filled"
+            width="25"
+            onClick={() => saveBoardToDB()}
+          ></Icon>
+          {dropzones.length > 1 && (
+            <Icon
+              icon="eva:file-remove-fill"
+              width="25"
+              onClick={() => removeBoard(dropzone.id)}
+            ></Icon>
+          )}
+        </StyledIcons>
+      </DZWrapper>
+
+      <Link href="/boardCollections" passHref>
+        <Anchor>go here to see the dashboards you have saved</Anchor>
+      </Link>
     </>
   );
 }
 
+const Anchor = styled.a`
+  text-decoration: none;
+`;
+
 const DZWrapper = styled.div`
   position: relative;
-`;
-
-const StyledButton = styled(Button)`
-  background-color: "transparent"
-  padding: 15px;
-  margin: 10px 0;
-  width:100px;
-`;
-
-const DropzoneContainer = styled.div`
   padding: 10px 0;
 `;
 
 const StyledIcons = styled.span`
-  display: flex;
   position: absolute;
-  top: 0;
+  top: 10px;
   right: 0;
 `;
 

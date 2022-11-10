@@ -24,11 +24,10 @@ export async function getAllFavouriteArticles() {
 export async function getAllSelections() {
   await dbConnect();
 
-  //const selections = await FavouriteArticle.find({}).select("selections -_id");
   const selections = await FavouriteArticle.find({
     "selections.0": { $exists: true },
   });
-
+  if (selections.length === 0) return [];
   const sanitizedselections = selections[0].selections.map((selection) => ({
     id: selection.id,
     text: selection.text,

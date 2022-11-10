@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Dropzone({ id, ondragover, ondrop, children }) {
+export default function Dropzone({ id, ref, ondragover, ondrop, children }) {
   return (
     <DropArea
       data-text="DROP HERE!"

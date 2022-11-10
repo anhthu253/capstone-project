@@ -81,13 +81,6 @@ export default function Dashboard({ allSelections }) {
   const [remainDragItemCount, setRemainDragItemCount] = useState(
     draglist.length
   );
-  const [dropzones, setDropzones] = useState([
-    {
-      id: Math.random().toString(36).substring(2),
-      text: "Drop here!",
-    },
-  ]);
-
   const [colorPalette, setColorPalette] = useState({});
   const [currentDraggable, setCurrentDraggable] = useState({
     id: "",
@@ -150,10 +143,6 @@ export default function Dashboard({ allSelections }) {
         document.querySelector(`#${CSS.escape(dataID)}`)
       );
     }
-  }
-
-  function removeBoard(id) {
-    setDropzones((dropzones) => dropzones.filter((dz) => dz.id !== id));
   }
 
   function clearDropzone(dropzoneWraper) {
@@ -235,13 +224,6 @@ export default function Dashboard({ allSelections }) {
             width="25"
             onClick={() => saveBoardToDB()}
           ></Icon>
-          {dropzones.length > 1 && (
-            <Icon
-              icon="eva:file-remove-fill"
-              width="25"
-              onClick={() => removeBoard(dropzone.id)}
-            ></Icon>
-          )}
         </StyledIcons>
       </DZWrapper>
 

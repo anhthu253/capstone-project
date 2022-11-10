@@ -36,7 +36,7 @@ export default function BoardCollections({ allDashBoards }) {
     }
   }
   return dashboards.map((dashboard) => (
-    <Wrapper>
+    <Wrapper key={dashboard.id}>
       <DropBoard key={dashboard.id} board={dashboard.board}></DropBoard>
       <StyledIcon
         onClick={() => removeDashboard(dashboard.id)}

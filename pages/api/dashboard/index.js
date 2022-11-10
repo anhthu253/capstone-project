@@ -1,7 +1,5 @@
 import dbConnect from "../../../lib/dbConnect";
 import DashBoard from "../../../models/DashBoard";
-import FavouriteArticle from "../../../models/FavouriteArticle";
-import { getAllDashBoards } from "../../../services/dashboardService";
 
 export default async function handler(request, response) {
   await dbConnect();

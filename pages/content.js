@@ -28,6 +28,16 @@ export default function Content({ currentCollections }) {
     spans.forEach((span) => span.addEventListener("dblclick", removeHighlight));
   }
 
+  async function getCurrentSelectionsFromDB() {
+    try {
+      const response = await fetch(`/api/article/${currentArticle.id}`);
+      const selectionFromDB = await response.json();
+      setSelections(selectionFromDB);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   //update document with highlights to database
   async function saveSelectionToDB() {
     const updatedContent = contentRef.current.innerHTML;
@@ -113,6 +123,7 @@ export default function Content({ currentCollections }) {
   }
 
   useEffect(() => {
+    getCurrentSelectionsFromDB();
     const allParagraphs = document.querySelectorAll("p");
     allParagraphs.forEach((p) => {
       p.setAttribute("id", "text" + Math.random().toString(36).substring(2));

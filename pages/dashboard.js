@@ -110,6 +110,7 @@ export default function Dashboard({ allSelections }) {
       console.error(error);
     }
   }
+
   //close the color palette by clicking outside it
   function closeColorPalette(event) {
     if (event.target.id !== "ColorPalette")

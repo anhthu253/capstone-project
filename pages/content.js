@@ -21,7 +21,6 @@ export default function Content({ currentCollections }) {
   const currentArticle = useStore((state) => state.currentArticle);
   const [popUp, setPopUp] = useState(false);
   const [selections, setSelections] = useState([]);
-  const [selectionsFromDB, setSelectionsFromDB] = useState([]);
   const contentRef = useRef();
 
   function restoreHighlightRemoveEvent() {

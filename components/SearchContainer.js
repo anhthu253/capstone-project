@@ -61,7 +61,7 @@ const StyledSearchContainer = styled.form`
 
 const StyledArticle = styled.section`
   display: grid;
-  grid-template-columns: 6rem 12rem 1fr;
+  grid-template-columns: 5rem 10rem 1fr;
   gap: 1rem;
 `;
 

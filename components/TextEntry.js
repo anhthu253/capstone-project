@@ -24,7 +24,7 @@ export default function TextEntry({
 
 const StyledTextEntry = styled.section`
   display: grid;
-  grid-template-columns: 6rem 12rem 1fr;
+  grid-template-columns: 5rem 10em 1fr;
   gap: 1rem;
 `;
 const StyledInput = styled.input`

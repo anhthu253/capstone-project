@@ -14,7 +14,7 @@ export default function Layout({ children }) {
 const StyledLayout = styled.section`
   display: grid;
   width: 100%;
-  padding: 3rem;
+  padding: 2rem;
   grid-template-rows: 1fr 2rem;
   gap: 10px;
 `;

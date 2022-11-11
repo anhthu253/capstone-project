@@ -28,7 +28,6 @@ export async function getAllSelections() {
     {},
     { _id: 0, selections: 1 }
   );
-  if (allSelections.length === 0) return [];
 
   let sanitizedselections = allSelections.map((selections) =>
     selections.selections.map((selection) => ({

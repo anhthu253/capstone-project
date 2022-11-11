@@ -24,11 +24,35 @@ export async function getAllFavouriteArticles() {
 export async function getAllSelections() {
   await dbConnect();
 
-  const selections = await FavouriteArticle.find({
-    "selections.0": { $exists: true },
-  });
-  if (selections.length === 0) return [];
-  const sanitizedselections = selections[0].selections.map((selection) => ({
+  const allSelections = await FavouriteArticle.find(
+    {},
+    { _id: 0, selections: 1 }
+  );
+  if (allSelections.length === 0) return [];
+
+  let sanitizedselections = allSelections.map((selections) =>
+    selections.selections.map((selection) => ({
+      id: selection.id,
+      text: selection.text,
+    }))
+  );
+
+  sanitizedselections = sanitizedselections.flat();
+  return sanitizedselections;
+}
+
+export async function getSelectionsPerArticle(id) {
+  await dbConnect();
+
+  const selections = await FavouriteArticle.findById(
+    { _id: id },
+    {
+      _id: 0,
+      selections: 1,
+    }
+  );
+
+  const sanitizedselections = selections.selections.map((selection) => ({
     id: selection.id,
     text: selection.text,
   }));

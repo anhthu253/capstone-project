@@ -21,11 +21,22 @@ export default function Content({ currentCollections }) {
   const currentArticle = useStore((state) => state.currentArticle);
   const [popUp, setPopUp] = useState(false);
   const [selections, setSelections] = useState([]);
+  const [selectionsFromDB, setSelectionsFromDB] = useState([]);
   const contentRef = useRef();
 
   function restoreHighlightRemoveEvent() {
     const spans = document.querySelectorAll(".highlight");
     spans.forEach((span) => span.addEventListener("dblclick", removeHighlight));
+  }
+
+  async function getCurrentSelectionsFromDB() {
+    try {
+      const response = await fetch(`/api/article/${currentArticle.id}`);
+      const selectionFromDB = await response.json();
+      setSelections(selectionFromDB);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   //update document with highlights to database
@@ -113,6 +124,7 @@ export default function Content({ currentCollections }) {
   }
 
   useEffect(() => {
+    getCurrentSelectionsFromDB();
     const allParagraphs = document.querySelectorAll("p");
     allParagraphs.forEach((p) => {
       p.setAttribute("id", "text" + Math.random().toString(36).substring(2));

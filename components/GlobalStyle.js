@@ -13,8 +13,18 @@ const GlobalStyle = createGlobalStyle`
     --font-tertiary: "Ephesis";
   }
 
-  * {
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+html, body, #__next {
+  width: 100%;
+  min-height: 100vh;
 }
 
   @font-face {
@@ -69,7 +79,6 @@ const GlobalStyle = createGlobalStyle`
 
   
   body {
-    display:flex;
     font-family: 'Gothic A1';
     margin: 0;
     background-image: url("/images/background-paper.jpg");

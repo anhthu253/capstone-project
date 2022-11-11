@@ -31,17 +31,25 @@ export default function DragContainer({
   );
 }
 
-const Container = styled.section`
+const Container = styled.ul`
   position: relative;
-  display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   width: 100%;
-  height: 12rem;
-
+  height: 11rem;
+  display: flex;
+  list-style: none;
+  overflow-x: auto;
+  overflow-y: hidden;
   &:empty:not(:focus):before {
     content: attr(data-text);
     opacity: 0.6;
     align-self: center;
     margin: 0 auto;
   }
+`;
+const ContainerList = styled.ul`
+  display: flex;
+  list-style: none;
+  width: 100%;
+  overflow-x: auto;
 `;

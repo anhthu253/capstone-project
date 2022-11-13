@@ -15,5 +15,5 @@ export default function WallShred() {
 
 const StyledWallShred = styled.section`
   margin-left: -30rem;
-  margin-top: -8rem;
+  margin-top: -7rem;
 `;

@@ -1,30 +1,12 @@
 import styled from "styled-components";
 
 export default function Header({ className }) {
-  return (
-    <StyledHeader className={className}>
-      <StyledTitle>Your news</StyledTitle>
-      <SubText>The quest begins here</SubText>
-    </StyledHeader>
-  );
+  return <StyledTitle>Your news</StyledTitle>;
 }
 
-const StyledHeader = styled.header`
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  border-top: var(--line-primary);
-`;
-
 const StyledTitle = styled.h1`
-  grid-column: 1;
-  margin-bottom: 0;
+  margin-top: -20px;
   font-family: var(--font-secondary);
-`;
-
-const SubText = styled.h2`
-  grid-row: 2;
-  grid-column: 2;
-  margin-bottom: 0;
-  font-family: var(--font-tertiary);
-  text-align: right;
+  font-size: 40px;
+  letter-spacing: 1px;
 `;

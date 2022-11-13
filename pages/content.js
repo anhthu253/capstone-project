@@ -1,11 +1,15 @@
 import { useStore } from "../hooks/useStore";
 import { useEffect, useState, useRef } from "react";
-import { Icon } from "@iconify/react";
 import styled from "styled-components";
 import Link from "next/link";
 import PopupMenu from "../components/PopupMenu";
 import { getAllCollections } from "../services/collectionService";
 import Button from "../components/Button";
+import {
+  faSquareCaretLeft,
+  faFolderPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export async function getServerSideProps() {
   const currentCollections = await getAllCollections();
@@ -105,12 +109,11 @@ export default function Content({ currentCollections }) {
       );
       return;
     }
-
     const span = document.createElement("span");
     const spanID = Math.random().toString(36).substring(2);
     span.setAttribute("id", spanID);
     span.classList.add("highlight");
-    span.style.backgroundColor = "yellow";
+    span.style.backgroundColor = "var(--navigation-color)";
     span.appendChild(range.extractContents());
     range.insertNode(span);
     setSelections((prevSelections) => [
@@ -142,30 +145,33 @@ export default function Content({ currentCollections }) {
         />
       )}
       <StyledSection blur={popUp}>
-        <Link
-          href={
-            currentArticle.isSaved
-              ? `/collections/${currentArticle.collectionId}`
-              : "/"
-          }
-        >
-          <StyledButton>Back</StyledButton>
-        </Link>
+        <StyledIcons>
+          <Link
+            href={
+              currentArticle.isSaved
+                ? `/collections/${currentArticle.collectionId}`
+                : "/"
+            }
+          >
+            <FontAwesomeIcon icon={faSquareCaretLeft}></FontAwesomeIcon>
+          </Link>
 
+          {!currentArticle.isSaved && (
+            <FontAwesomeIcon
+              icon={faFolderPlus}
+              onClick={() => {
+                setPopUp((popup) => !popup);
+              }}
+            />
+          )}
+        </StyledIcons>
         {currentArticle.isSaved && (
           <StyledButton onClick={saveSelectionToDB}>
             Save highlights
           </StyledButton>
         )}
-        {!currentArticle.isSaved && (
-          <StyledIcon
-            icon="entypo:dots-three-vertical"
-            onClick={() => {
-              setPopUp((popup) => !popup);
-            }}
-          />
-        )}
-        <h3>{currentArticle.title}</h3>
+        <br />
+        <h2>{currentArticle.title}</h2>
         <StyledContent
           className="articleFullContent"
           ref={contentRef}
@@ -182,30 +188,42 @@ const StyledMain = styled.div`
 `;
 
 const StyledSection = styled.section`
-  opacity: ${({ blur }) => (blur ? 0.2 : 1)};
+  opacity: ${({ blur }) => (blur ? 0.1 : 1)};
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
-const StyledContent = styled.div`
-  margin-top: 1rem;
+const StyledContent = styled.article`
   & img {
-    width: 250px;
+    width: 300px;
     height: auto;
+  }
+  & p {
+    margin-bottom: 1rem;
   }
 `;
 
-const StyledIcon = styled(Icon)`
-  position: absolute;
-  top: 0;
-  right: 0;
+const StyledIcons = styled.div`
+  display: flex;
+  gap: 10px;
+  font-size: 25px;
   &:hover {
     cursor: pointer;
   }
 `;
 
 const StyledButton = styled(Button)`
-  box-shadow: 3px 2px 3px 2px var(--line-color);
-  border: var(--line-color);
-  background: transparent;
+  position: absolute;
+  top: -10px;
+  right: 0;
+  margin: 0;
+  border: none;
+  color: var(--text-color);
+  background: var(--navigation-color);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   &:hover {
     cursor: pointer;
   }

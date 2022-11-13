@@ -1,32 +1,38 @@
 import styled from "styled-components";
 import Header from "./Header";
 import NavigationBar from "./NavigationBar";
+import WallShred from "./Wallshred";
+
 export default function Layout({ children }) {
   return (
-    <StyledLayout>
-      <Header />
-      <NavigationLayout></NavigationLayout>
-      <Main>{children}</Main>
-    </StyledLayout>
+    <>
+      <WallShred />
+      <StyledLayout>
+        <Header />
+        <NavigationBar></NavigationBar>
+        <Main>{children}</Main>
+      </StyledLayout>
+    </>
   );
 }
 
 const StyledLayout = styled.section`
-  display: grid;
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   padding: 2rem;
-  grid-template-rows: 1fr 2rem;
   gap: 10px;
 `;
 
-const HeaderLayout = styled(Header)`
-  grid-row: 1;
+const StyledWallShred = styled(WallShred)`
+  position: absolute;
+  top: 0;
 `;
 
-const NavigationLayout = styled(NavigationBar)`
-  grid-row: 2;
-`;
 const Main = styled.main`
+  margin-top: 40px;
   width: 100%;
   overflow: hidden;
 `;

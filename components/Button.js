@@ -9,7 +9,11 @@ export default function Button({ children, className, type, onClick }) {
 }
 
 const StyledButton = styled.button`
-  padding: 5px 15px;
-  border-radius: 4px;
-  border: var(--line-secondary);
+  background-color: #2b2626;
+  color: #f3f3f3;
+  font-family: "Special Elite";
+  border-radius: 2px;
+  box-shadow: 0 4px 4px 0 #f3f3f3;
+  padding: 15px;
+  margin: 10px 0;
 `;

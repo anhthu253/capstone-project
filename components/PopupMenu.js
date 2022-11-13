@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Icon } from "@iconify/react";
 import { useState } from "react";
 import CollectionItem from "./CollectionItem";
 import CollectionForm from "./CollectionForm";
@@ -59,25 +58,19 @@ export default function PopupMenu({
   }
 
   return (
-    <StyledDiv>
-      <StyledSection>
-        <StyledButton
-          onClick={() => {
-            setEditMode((editable) => !editable);
-          }}
-        >
-          Create new collection
-        </StyledButton>
-        {editMode && (
-          <CollectionForm
-            onSubmit={handleSubmit}
-            editMode={editMode}
-            setEditMode={setEditMode}
-          />
-        )}
-        <CollectionContainer>
-          {!editMode &&
-            collections.map((collection) => (
+    <StyledSection>
+      {editMode && (
+        <CollectionForm
+          onSubmit={handleSubmit}
+          editMode={editMode}
+          setEditMode={setEditMode}
+        />
+      )}
+      <CollectionContainer>
+        {!editMode && (
+          <>
+            <StyledP>Your collections</StyledP>
+            {collections.map((collection) => (
               <CollectionItem
                 key={collection.id}
                 removeCollection={() => {}}
@@ -87,55 +80,47 @@ export default function PopupMenu({
                 {collection.name}
               </CollectionItem>
             ))}
-        </CollectionContainer>
-      </StyledSection>
-      <Back onClick={() => setPopUp(false)}>
-        <StyledIcon icon="fluent:arrow-exit-20-regular" width="25" />
-      </Back>
-    </StyledDiv>
+          </>
+        )}
+      </CollectionContainer>
+      {!editMode && (
+        <StyledButtons>
+          <StyledButton
+            onClick={() => {
+              setEditMode((editable) => !editable);
+            }}
+          >
+            add
+          </StyledButton>
+          <StyledButton onClick={() => setPopUp(false)}>cancel</StyledButton>
+        </StyledButtons>
+      )}
+    </StyledSection>
   );
 }
 
-const StyledDiv = styled.div`
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  width: 50%;
-  min-height: 300px;
-  background-image: url("/images/background-paper.jpg");
-  box-shadow: 5px 5px 5px 5px #838586;
-  padding: 10px;
-  z-index: 9999;
-`;
-
 const StyledSection = styled.section`
-  grid-column: 2;
-  text-align: center;
-`;
-const Back = styled.section`
-  grid-column: 3;
-  text-align: right;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #f0f0f4;
 `;
 
-const StyledIcon = styled(Icon)`
-  &:hover {
-    cursor: pointer;
-  }
+const StyledP = styled.p`
+  margin-bottom: 20px;
 `;
 
 const StyledButton = styled(Button)`
-  background-color: #d8c9ad;
-  padding: 15px;
-  margin: 10px 0;
+  padding: 10px 15px;
 `;
 
-const CollectionContainer = styled.ul`
+const StyledButtons = styled.span`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
   gap: 10px;
+`;
+const CollectionContainer = styled.ul`
   list-style: none;
   padding-inline-start: 0;
 `;

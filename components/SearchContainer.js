@@ -56,7 +56,6 @@ const StyledSearchContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border: var(--line-primary);
 `;
 
 const StyledArticle = styled.section`
@@ -72,8 +71,6 @@ const StyledSelect = styled.select`
 `;
 
 const StyledButton = styled(Button)`
-  justify-self: end;
-  box-shadow: 3px 2px 3px 2px var(--line-color);
-  border: var(--line-color);
-  background: transparent;
+  justify-self: start;
+  padding: 10px 15px;
 `;

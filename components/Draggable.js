@@ -25,16 +25,17 @@ export default function Draggable({
 
 const DragBox = styled.li`
   padding: 5px;
-  margin-right: 5px;
+  margin-right: 10px;
   list-style: none;
-  flex: 0 0 10rem;
-  width:10rem;
+  flex: 0 0 8rem;
+  width:8rem;
   height: 10rem;
-  border:var(--line-secondary);
-  --box-shadow: 1px 2px 3px 4px rgba(20, 20, 20, 0.4);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   text-overflow:clip;
   overflow-y:auto;
   overflow-x:hidden;
-  background-color: ${({ color }) => color}
+  background-color: ${({ color }) => color};
   }
 `;

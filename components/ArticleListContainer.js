@@ -45,7 +45,6 @@ export default function ArticleListContainer({
 const StyledListContainer = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 10px;
   padding-right: 2rem;
   list-style: none;
   padding-inline-start: 0;

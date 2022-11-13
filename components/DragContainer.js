@@ -33,9 +33,11 @@ export default function DragContainer({
 
 const Container = styled.ul`
   position: relative;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  --padding: 3px 0;
   width: 100%;
-  height: 11rem;
+  --height: 11rem;
+  --background: #ccc;
   display: flex;
   list-style: none;
   overflow-x: auto;

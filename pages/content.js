@@ -2,6 +2,7 @@ import { useStore } from "../hooks/useStore";
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import PopupMenu from "../components/PopupMenu";
 import { getAllCollections } from "../services/collectionService";
 import Button from "../components/Button";
@@ -22,9 +23,11 @@ export async function getServerSideProps() {
 }
 
 export default function Content({ currentCollections }) {
+  const router = useRouter();
   const currentArticle = useStore((state) => state.currentArticle);
   const [popUp, setPopUp] = useState(false);
   const [selections, setSelections] = useState([]);
+  const [selectionsFromDB, setSelectionsFromDB] = useState([]);
   const contentRef = useRef();
 
   function restoreHighlightRemoveEvent() {
@@ -37,6 +40,7 @@ export default function Content({ currentCollections }) {
       const response = await fetch(`/api/article/${currentArticle.id}`);
       const selectionFromDB = await response.json();
       setSelections(selectionFromDB);
+      setSelectionsFromDB(selectionFromDB);
     } catch (error) {
       console.error(error);
     }
@@ -165,11 +169,12 @@ export default function Content({ currentCollections }) {
             />
           )}
         </StyledIcons>
-        {currentArticle.isSaved && (
-          <StyledButton onClick={saveSelectionToDB}>
-            Save highlights
-          </StyledButton>
-        )}
+        {currentArticle.isSaved &&
+          selections.join(" ") !== selectionsFromDB.join(" ") && (
+            <StyledButton onClick={saveSelectionToDB}>
+              Save highlights
+            </StyledButton>
+          )}
         <br />
         <h2>{currentArticle.title}</h2>
         <StyledContent

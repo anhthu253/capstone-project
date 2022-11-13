@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Icon } from "@iconify/react";
+import Image from "next/image";
 export default function ComponentItem({
   children,
   removeCollection,
@@ -9,11 +9,15 @@ export default function ComponentItem({
   return (
     <StyledColItem>
       <span onClick={onCollection}>{children}</span>
-      <StyledIcon
-        visible={removable}
-        icon="akar-icons:chat-remove"
-        onClick={removeCollection}
-      />
+      {removable && (
+        <Image
+          src="/images/delete.png"
+          width="18"
+          height="18"
+          onClick={removeCollection}
+          alt="remove"
+        ></Image>
+      )}
     </StyledColItem>
   );
 }
@@ -21,12 +25,12 @@ export default function ComponentItem({
 const StyledColItem = styled.li`
   display: flex;
   justify-content: space-between;
-  padding: 5px;
+  background: #e8e8e9;
+  font-family: "Manrope";
+  font-size: 15px;
+  padding: 10px;
+  margin: 8px 0;
   &:hover {
     cursor: pointer;
   }
-`;
-
-const StyledIcon = styled(Icon)`
-  display: ${({ visible }) => (visible ? "block" : "none")};
 `;

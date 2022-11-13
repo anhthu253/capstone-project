@@ -178,14 +178,16 @@ export default function Dashboard({ allSelections }) {
       </DZWrapper>
 
       <Link href="/boardCollections" passHref>
-        <Anchor>go here to see the dashboards you have saved</Anchor>
+        <Anchor>see saved dashboards here</Anchor>
       </Link>
     </>
   );
 }
 
 const Anchor = styled.a`
-  text-decoration: none;
+  font-style: italic;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 `;
 
 const DZWrapper = styled.div`
@@ -195,8 +197,9 @@ const DZWrapper = styled.div`
 
 const StyledIcons = styled.span`
   position: absolute;
-  top: 10px;
+  top: 20px;
   right: 0;
+  color: #757677; ;
 `;
 
 const ColorPalette = styled.span`

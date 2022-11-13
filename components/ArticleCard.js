@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useStore } from "../hooks/useStore";
 import { Icon } from "@iconify/react";
+import { faSquareMinus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function ArticleCard({ article, delible, onDelete }) {
   const { url, urlToImage, title, author, description, message, alert } =
@@ -26,7 +28,7 @@ export default function ArticleCard({ article, delible, onDelete }) {
   }
 
   return (
-    <li>
+    <StyledListItem>
       {alert ? (
         alert === "error" ? (
           <StyledError>{message}</StyledError>
@@ -36,30 +38,35 @@ export default function ArticleCard({ article, delible, onDelete }) {
       ) : (
         <StyledCard>
           {delible && (
-            <StyledIcon
-              icon="akar-icons:chat-remove"
-              width="25"
+            <StyledFontAwesomeIcon
               onClick={onDelete}
-            />
+              icon={faSquareMinus}
+            ></StyledFontAwesomeIcon>
           )}
-          <img
-            src={urlToImage}
-            alt="article image"
-            width="250"
-            height="150"
-          ></img>
 
-          <article>
+          <StyledArticle>
+            <img
+              onClick={getFullContent}
+              src={urlToImage}
+              alt="article image"
+              width="300"
+              height="180"
+            ></img>
             <Title onClick={getFullContent}>{title}</Title>
-            <Author>BY {author}</Author>
+            <Author>by {author}</Author>
             <Description>{description}</Description>
-          </article>
+          </StyledArticle>
         </StyledCard>
       )}
-    </li>
+    </StyledListItem>
   );
 }
 
+const StyledListItem = styled.li`
+  padding: 20px 0;
+  border-bottom: var(--line-secondary);
+  width: fit-content;
+`;
 const StyledIcon = styled(Icon)`
   position: absolute;
   top: 0;
@@ -68,6 +75,18 @@ const StyledIcon = styled(Icon)`
     cursor: pointer;
   }
 `;
+
+const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
+  position: absolute;
+  top: 0;
+  right: -20px;
+`;
+
+const StyledArticle = styled.article`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 const Title = styled.h3`
   &:hover {
     cursor: pointer;
@@ -75,7 +94,6 @@ const Title = styled.h3`
   }
 `;
 const Author = styled.p`
-  text-transform: uppercase;
   color: var(--line-color);
 `;
 
@@ -87,8 +105,8 @@ const StyledCard = styled.section`
   position: relative;
   display: flex;
   flex-flow: row wrap;
-  gap: 20px;
-  border-bottom: var(--line-secondary);
+  gap: 40px;
+  --border-bottom: var(--line-secondary);
 `;
 
 const StyledError = styled.section`

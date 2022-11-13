@@ -10,9 +10,7 @@ export async function getServerSideProps() {
   const currentCollections = await getAllCollections();
 
   return {
-    props: {
-      currentCollections,
-    },
+    props: { currentCollections },
   };
 }
 
@@ -67,13 +65,6 @@ export default function Collections({ currentCollections }) {
   }
   return (
     <StyledSection>
-      <StyledButton
-        onClick={() => {
-          setEditMode((editable) => !editable);
-        }}
-      >
-        Create new collection
-      </StyledButton>
       {editMode && (
         <CollectionForm
           onSubmit={handleSubmit}
@@ -83,6 +74,7 @@ export default function Collections({ currentCollections }) {
       )}
       {!editMode && (
         <CollectionContainer>
+          <StyledP>Your collections</StyledP>
           {collections.map((collection) => (
             <CollectionItem
               key={collection.id}
@@ -96,6 +88,15 @@ export default function Collections({ currentCollections }) {
           ))}
         </CollectionContainer>
       )}
+      {!editMode && (
+        <StyledButton
+          onClick={() => {
+            setEditMode((editable) => !editable);
+          }}
+        >
+          add
+        </StyledButton>
+      )}
     </StyledSection>
   );
 }
@@ -105,14 +106,17 @@ const StyledSection = styled.section`
 `;
 
 const StyledButton = styled(Button)`
-  background-color: #d8c9ad;
-  padding: 15px;
-  margin: 10px 0;
+  padding: 10px 15px;
 `;
 
 const CollectionContainer = styled.ul`
+  text-align: left;
   list-style: none;
   padding-inline-start: 0;
+`;
+
+const StyledP = styled.p`
+  margin-bottom: 20px;
 `;
 
 const Anchor = styled.a`

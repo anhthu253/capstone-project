@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
 export default function Draggable({
   id,
   draggable,
@@ -24,15 +23,19 @@ export default function Draggable({
   );
 }
 
-const DragBox = styled.span`
-  padding: 10px;
+const DragBox = styled.li`
+  padding: 5px;
   margin-right: 10px;
-  width: 11rem;
-  height: 12rem;
-  box-shadow: 1px 2px 3px 4px rgba(20, 20, 20, 0.4);
-  text-overflow: clip;
-  overflow: hidden;
-  resize: horizontal;
-  background-color: ${({ color }) => color}
+  list-style: none;
+  flex: 0 0 8rem;
+  width:8rem;
+  height: 10rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  text-overflow:clip;
+  overflow-y:auto;
+  overflow-x:hidden;
+  background-color: ${({ color }) => color};
   }
 `;

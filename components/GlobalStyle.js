@@ -4,17 +4,28 @@ const GlobalStyle = createGlobalStyle`
 :root {
     --background-primary:#F5F5F5;
     --text-color: #2b2626;
-    --navigation-color:#C8A158;
+    --navigation-color:#EDFF1D;
     --line-color: #838586;
     --line-primary: #838586 2px solid ;
     --line-secondary: #838586 1px solid;
     --font-primary: "Gothic A1";
     --font-secondary: "Pirata One";
     --font-tertiary: "Ephesis";
+    --font-navigation:"Special Elite",
   }
 
-  * {
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+html, body, #__next {
+  width: 100%;
+  min-height: 100vh;
 }
 
   @font-face {
@@ -47,7 +58,26 @@ const GlobalStyle = createGlobalStyle`
       url("/fonts/unifrakturmaguntia-v16-latin-regular.woff2") format("woff2"),
       url("/fonts/unifrakturmaguntia-v16-latin-regular.woff") format("woff");
   }
+
+  /* special-elite-regular - latin */
+@font-face {
+  font-family: 'Special Elite';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('../fonts/special-elite-v18-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/special-elite-v18-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
   
+/* manrope-regular - latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('../fonts/manrope-v13-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/manrope-v13-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
   /* ephesis-regular - latin */
   @font-face {
     font-family: 'Ephesis';
@@ -57,6 +87,7 @@ const GlobalStyle = createGlobalStyle`
          url('../fonts/ephesis-v7-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
          url('../fonts/ephesis-v7-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
   }
+
   /* gothic-a1-regular - latin */
   @font-face {
     font-family: 'Gothic A1';
@@ -69,11 +100,16 @@ const GlobalStyle = createGlobalStyle`
 
   
   body {
-    display:flex;
-    font-family: 'Gothic A1';
+    font-family: 'Manrope';
     margin: 0;
-    background-image: url("/images/background-paper.jpg");
+    --background-image: url("/images/background-paper.jpg");
+    background:#F0F0F4;
     color: var(--text-color);
+  }
+
+  a {
+    all: unset;
+    user-select: none;
   }
 
 `;

@@ -1,26 +1,6 @@
 import dbConnect from "../lib/dbConnect";
 import FavouriteArticle from "../models/FavouriteArticle";
 
-export async function getAllFavouriteArticles() {
-  await dbConnect();
-
-  const favArticles = await FavouriteArticle.find();
-
-  const sanitizedFavArticles = favArticles.map((favArticle) => ({
-    id: favArticle.id,
-    title: favArticle.title,
-    author: favArticle.author,
-    description: favArticle.description,
-    fullContent: favArticle.fullContent,
-    selections: favArticle.selections,
-    url: favArticle.url,
-    urlToImage: favArticle.urlToImage,
-    collectionId: favArticle.collectionId,
-  }));
-
-  return sanitizedFavArticles;
-}
-
 export async function getAllSelections() {
   await dbConnect();
 

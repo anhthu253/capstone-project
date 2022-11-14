@@ -16,13 +16,12 @@ export default async function handler(request, response) {
     case "PUT":
       const article = JSON.parse(request.body);
       await FavouriteArticle.findByIdAndUpdate(
-        { _id: article.id },
+        { _id: id },
         { fullContent: article.fullContent, selections: article.selections }
       );
       return response
         .status(200)
         .json({ message: "Article updated", updatedId: id });
-
     default:
       return response
         .status(405)

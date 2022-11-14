@@ -128,7 +128,7 @@ export default function Content({ currentCollections }) {
   }
 
   useEffect(() => {
-    getCurrentSelectionsFromDB();
+    if (currentArticle.isSaved) getCurrentSelectionsFromDB();
     const allParagraphs = document.querySelectorAll("p");
     allParagraphs.forEach((p) => {
       p.setAttribute("id", "text" + Math.random().toString(36).substring(2));

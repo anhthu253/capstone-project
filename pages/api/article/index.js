@@ -1,12 +1,8 @@
 import dbConnect from "../../../lib/dbConnect";
 import FavouriteArticle from "../../../models/FavouriteArticle";
-import { getAllFavouriteArticles } from "../../../services/articleService";
 export default async function handler(request, response) {
   await dbConnect();
   switch (request.method) {
-    case "GET":
-      const allFavArticles = await getAllFavouriteArticles();
-      return response.status(200).json(allFavArticles);
     case "PUT":
       const article = JSON.parse(request.body);
       const {

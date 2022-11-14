@@ -22,7 +22,7 @@ const StyledLayout = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 2rem;
+  padding: 30px;
   gap: 10px;
 `;
 

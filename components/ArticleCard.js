@@ -46,7 +46,7 @@ export default function ArticleCard({ article, delible, onDelete }) {
 
           <StyledArticle>
             <img
-              //onClick={getFullContent}
+              onClick={getFullContent}
               src={urlToImage}
               alt="article image"
               width="300"

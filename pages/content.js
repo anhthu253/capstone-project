@@ -190,7 +190,7 @@ const StyledMain = styled.div`
 `;
 
 const StyledSection = styled.section`
-  opacity: ${({ blur }) => (blur ? 0.1 : 1)};
+  opacity: ${({ blur }) => (blur ? 0 : 1)};
   display: flex;
   flex-direction: column;
   gap: 10px;

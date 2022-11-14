@@ -9,8 +9,8 @@ export default function ColorBox({ background, onChooseColor }) {
 }
 
 const StyledColorBox = styled.span`
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
   background: ${({ background }) => background};
   border: ${({ background }) =>
     background === "transparent" ? "var(--line-secondary)" : "none"};

@@ -15,9 +15,11 @@ export default function DropBoard({ board }) {
 const Box = styled.span`
   padding: 10px;
   margin-right: 10px;
-  width: 11rem;
-  height: 12rem;
-  box-shadow: 1px 2px 3px 4px rgba(20, 20, 20, 0.4);
+  width: 8rem;
+  height: 10rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   text-overflow: clip;
   overflow: hidden;
   resize: horizontal;
@@ -28,11 +30,11 @@ const Box = styled.span`
 const Board = styled.section`
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 20px;
   width: 100%;
-  height: 30rem;
+  height: 35rem;
   border: var(--line-secondary);
   padding: 10px;
   margin: 10px 0;

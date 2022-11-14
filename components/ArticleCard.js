@@ -79,7 +79,7 @@ const StyledIcon = styled(Icon)`
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   position: absolute;
   top: 0;
-  right: -20px;
+  right: -15px;
 `;
 
 const StyledArticle = styled.article`

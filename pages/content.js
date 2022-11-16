@@ -64,7 +64,8 @@ export default function Content({ currentCollections }) {
 
   //check which paragraph  is the node's ancestor
   function whichParagraph(node) {
-    if (node === null) return null;
+    if (!node) return null;
+    if (node.tagName.startsWith("H")) return node;
     if (node.id?.startsWith("text")) return node;
     return whichParagraph(node?.parentNode);
   }
@@ -83,6 +84,7 @@ export default function Content({ currentCollections }) {
 
   function highLight(event) {
     const selection = window.getSelection();
+
     if (!selection) return; //if no selection
     if (selection.toString().length === 0) return;
     if (event.detail === 2) return; // double mouse click
@@ -104,13 +106,14 @@ export default function Content({ currentCollections }) {
     }
 
     const ancestorP = whichParagraph(event.target);
-    const childrenArray = [...ancestorP.children] || [];
+    const childrenArray = [...ancestorP?.children] || [];
     if (childrenArray.find((node) => node.className === "highlight")) {
       window.alert(
         "Only one selection is allowed in a paragraph. Please remove the last one first before making another selection"
       );
       return;
     }
+
     const span = document.createElement("span");
     const spanID = Math.random().toString(36).substring(2);
     span.setAttribute("id", spanID);
@@ -130,9 +133,13 @@ export default function Content({ currentCollections }) {
   useEffect(() => {
     if (currentArticle.isSaved) getCurrentSelectionsFromDB();
     const allParagraphs = document.querySelectorAll("p");
+    const allLists = document.querySelectorAll("li");
     allParagraphs.forEach((p) => {
       p.setAttribute("id", "text" + Math.random().toString(36).substring(2));
     });
+    allLists.forEach((li) =>
+      li.setAttribute("id", "text" + Math.random().toString(36).substring(2))
+    );
     restoreHighlightRemoveEvent();
   }, []);
 

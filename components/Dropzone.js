@@ -1,14 +1,13 @@
 import styled from "styled-components";
 
-export default function Dropzone({ id, ondragover, ondrop, children }) {
+export default function Dropzone({ id, ondragover, ondrop }) {
   return (
     <DropArea
       data-text="DROP HERE!"
       id={id}
       onDragOver={ondragover}
       onDrop={ondrop}
-    >
-      {children}
+    > 
     </DropArea>
   );
 }

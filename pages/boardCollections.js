@@ -49,8 +49,8 @@ export default function BoardCollections({ allDashBoards }) {
 
 const StyledIcon = styled(Icon)`
   position: absolute;
-  top: 10px;
-  right: 0;
+  top: 0;
+  right: 46%;
 `;
 
 const Wrapper = styled.section`

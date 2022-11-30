@@ -44,7 +44,7 @@ export default function Dashboard({ allSelections }) {
     //popup the color pallete at right mouse click
     setColorPalette({
       display: true,
-      posX: event.pageX + "px",
+      posX: event.pageX - 80 + "px",
       posY: event.pageY + "px",
     });
   }
@@ -188,6 +188,9 @@ const Anchor = styled.a`
   font-style: italic;
   text-decoration: underline;
   text-underline-offset: 3px;
+  :hover {
+    cursor:pointer;
+  }
 `;
 
 const DZWrapper = styled.div`
@@ -198,8 +201,8 @@ const DZWrapper = styled.div`
 const StyledIcons = styled.span`
   position: absolute;
   top: 20px;
-  right: 0;
-  color: #757677; ;
+  right: 46%;
+  color: #757677;
 `;
 
 const ColorPalette = styled.span`

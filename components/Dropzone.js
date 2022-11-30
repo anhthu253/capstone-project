@@ -18,13 +18,11 @@ const DropArea = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  justify-items: center;
   gap: 10px;
   width: 100%;
   height: 35rem;
-  --border: 3px solid var(--line-color);
   box-shadow: inset 0 0 10px #757677;
-  padding: 25px 0;
+  padding: 25px 0 25px 16px;
   margin: 10px 0;
   &:empty:not(:focus):before {
     content: attr(data-text);

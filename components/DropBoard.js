@@ -32,16 +32,17 @@ const Board = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  gap: 20px;
+  gap: 10px;
   width: 100%;
   height: 35rem;
-  border: var(--line-secondary);
-  padding: 10px;
+  box-shadow: inset 0 0 10px #757677;
+  padding: 25px 0 25px 16px;
   margin: 10px 0;
   &:empty:not(:focus):before {
     content: attr(data-text);
     opacity: 0.6;
     grid-row: 2;
-    grid-column: 3;
+    align-self: center;
+    justify-self: end;
   }
 `;

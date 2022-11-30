@@ -203,6 +203,9 @@ const StyledIcons = styled.span`
   top: 20px;
   right: 46%;
   color: #757677;
+  :hover {
+    cursor:pointer;
+  }
 `;
 
 const ColorPalette = styled.span`

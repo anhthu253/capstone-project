@@ -1,6 +1,7 @@
 import DropBoard from "../components/DropBoard";
 import { getAllDashBoards } from "../services/dashboardService";
-import { Icon } from "@iconify/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState } from "react";
 
@@ -40,17 +41,20 @@ export default function BoardCollections({ allDashBoards }) {
       <DropBoard key={dashboard.id} board={dashboard.board}></DropBoard>
       <StyledIcon
         onClick={() => removeDashboard(dashboard.id)}
-        icon="fluent:delete-20-regular"
-        width={25}
+        icon={faTrashCan}
       />
     </Wrapper>
   ));
 }
 
-const StyledIcon = styled(Icon)`
+const StyledIcon = styled(FontAwesomeIcon)`
   position: absolute;
-  top: 0;
-  right: 46%;
+  top: 0px;
+  right: 48%;
+  color: #757677;
+  :hover {
+    cursor:pointer;
+  }
 `;
 
 const Wrapper = styled.section`

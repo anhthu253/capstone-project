@@ -22,7 +22,7 @@ const Box = styled.span`
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   text-overflow: clip;
   overflow: hidden;
-  resize: horizontal;
+  resize: both;
   background-color: ${({ background }) => background}
   }
 `;

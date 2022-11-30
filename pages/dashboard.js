@@ -168,13 +168,13 @@ export default function Dashboard({ allSelections }) {
             setRemainDragItemCount((prevCount) => prevCount - 1);
           }}
         ></Dropzone>
-        <StyledIcons>
+        {board.length > 0 && <StyledIcons>
           <Icon
             icon="fluent:save-20-filled"
             width="25"
             onClick={() => saveBoardToDB()}
           ></Icon>
-        </StyledIcons>
+        </StyledIcons>}
       </DZWrapper>
 
       <Link href="/boardCollections" passHref>

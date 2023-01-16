@@ -159,7 +159,7 @@ export default function Content({ currentCollections }) {
             href={
               currentArticle.isSaved
                 ? `/collections/${currentArticle.collectionId}`
-                : "/"
+                : "/articles"
             }
           >
             <FontAwesomeIcon icon={faSquareCaretLeft}></FontAwesomeIcon>

@@ -27,7 +27,7 @@ export default function SearchContainer() {
 
     setArticles(articles);
 
-    router.push("/");
+    router.push("/articles");
   }
 
   return (

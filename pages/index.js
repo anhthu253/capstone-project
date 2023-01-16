@@ -1,8 +1,6 @@
-import ArticleListContainer from "../components/ArticleListContainer";
-import { useStore } from "../hooks/useStore";
+import styled from "styled-components";
+import SearchContainer from "../components/SearchContainer";
 
-export default function Home() {
-  const articles = useStore((state) => state.articles);
-
-  return <ArticleListContainer currentArticles={articles} />;
+export default function Search() {
+  return <SearchContainer />;
 }

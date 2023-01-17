@@ -6,8 +6,8 @@ export default function NavigationBar({ className }) {
   const router = useRouter();
   return (
     <StyledNav className={className}>
-      <Link href="/" passHref>
-        <StyledLink active={router.pathname === "/"}>home</StyledLink>
+      <Link href="/articles" passHref>
+        <StyledLink active={router.pathname === "/articles"}>articles</StyledLink>
       </Link>
       /
       <Link href="/collections" passHref>
@@ -22,8 +22,8 @@ export default function NavigationBar({ className }) {
         </StyledLink>
       </Link>
       /
-      <Link href="/search" passHref>
-        <StyledLink active={router.pathname === "/search"}>search</StyledLink>
+      <Link href="/" passHref>
+        <StyledLink active={router.pathname === "/"}>search</StyledLink>
       </Link>
     </StyledNav>
   );
@@ -34,6 +34,13 @@ const StyledNav = styled.nav`
   border-top: 1px solid;
   padding: 15px 0;
   font-family: "Special Elite";
+  font-size:0.90rem;
+  @media screen and (min-width:360px){
+    font-size:0.95rem;
+  }
+  @media screen and (min-width:400px){
+    font-size:1rem;
+  }
 `;
 
 const StyledLink = styled.a`

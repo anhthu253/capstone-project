@@ -1,24 +1,30 @@
 import styled from "styled-components";
 import Header from "./Header";
 import NavigationBar from "./NavigationBar";
-import WallShred from "./Wallshred";
 
 export default function Layout({ children }) {
   return (
     <>
-      <WallShred />
+      <StyledWallShred src="/images/wallstripe-crop.png"></StyledWallShred>
       <StyledLayout>
-        <Header />
-        <NavigationBar></NavigationBar>
+        <Header />       
+        <NavigationBar/>
         <Main>{children}</Main>
       </StyledLayout>
     </>
   );
 }
 
+const StyledWallShred = styled.img`
+  position:absolute;
+  top:0;
+  width:100%;
+  height:300px;
+  object-fit:fill;
+  object-position:0 -120px;
+`
 const StyledLayout = styled.section`
-  position: absolute;
-  top: 0;
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -26,13 +32,8 @@ const StyledLayout = styled.section`
   gap: 10px;
 `;
 
-const StyledWallShred = styled(WallShred)`
-  position: absolute;
-  top: 0;
-`;
-
 const Main = styled.main`
-  margin-top: 40px;
+  margin-top: 30px;
   width: 100%;
   overflow: hidden;
 `;

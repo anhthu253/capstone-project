@@ -34,6 +34,13 @@ const StyledNav = styled.nav`
   border-top: 1px solid;
   padding: 15px 0;
   font-family: "Special Elite";
+  font-size:0.90rem;
+  @media screen and (min-width:360px){
+    font-size:0.95rem;
+  }
+  @media screen and (min-width:400px){
+    font-size:1rem;
+  }
 `;
 
 const StyledLink = styled.a`

@@ -1,34 +1,12 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Purpose of the app
+Collecting articles and columns from newspapers around the world so that the news inputs can be narrowed down to one's interest. 
+## Description
+- users can search for news/articles based on keywords (eg. politics, elections), sources (eg. nytimes), domain (eg. bbc.com, politico.com), when they were published (from -> to), languages.
+- from query results, users can add favorite articles to their own collections
+- a user can create as many collections as he/she wishes. Each collection behaves like a playlist in Spotify.
+- in each favourite articles, users can marks favorite paragraphs and save those highlights. 
+- a highlight can be removed by double clicking on it.
+- each saved highlight is presented as a card. All the cards of all saved highlights from different articles can be seen on the dashboard page
+- on the dashboard page, users can drag any of those cards to a drop zone. Upon saving it become a board
+- users can have as many of those boards as they want. Each board can have up to 6 cards of highlights.
+- users can choose a color for a highlight card: by right clicking on each card, a palette color is popped up (there are 4 colors on the palette to be chosen from). Closing the color palette can be done by simply clicking anywhere outside it.  

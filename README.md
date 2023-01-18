@@ -10,3 +10,6 @@ Collecting articles and columns from newspapers around the world so that the new
 - on the dashboard page, users can drag any of those cards to a drop zone. Upon saving it become a board
 - users can have as many of those boards as they want. Each board can have up to 6 cards of highlights.
 - users can choose a color for a highlight card: by right clicking on each card, a palette color is popped up (there are 4 colors on the palette to be chosen from). Closing the color palette can be done by simply clicking anywhere outside it.  
+
+
+[Watch video here!](./public/video/thu_nguyen.mov)

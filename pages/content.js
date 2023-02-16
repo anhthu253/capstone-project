@@ -83,6 +83,7 @@ export default function Content({ currentCollections }) {
   }
 
   function highLight(event) {
+    if (event.button === 2) return; //right click
     const selection = window.getSelection();
 
     if (!selection) return; //if no selection

@@ -23,8 +23,8 @@ export default function ArticleCard({ article, delible, onDelete }) {
       } catch (error) {
         console.error(error);
       }
-    } else setCurrentArticle(article);
-    router.push(`/content`);
+    } 
+    router.push(`/articles/${article.id}`);
   }
 
   return (

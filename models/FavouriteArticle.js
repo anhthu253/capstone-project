@@ -9,6 +9,7 @@ const favouriteArticleSchema = new Schema({
   selections: { type: Array, required: false },
   url: { type: String, required: true },
   urlToImage: { type: Array, required: false },
+  isSaved:{type:Boolean, required:false},
   collectionId: {
     type: Schema.Types.ObjectId,
     ref: "Collection",

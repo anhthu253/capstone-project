@@ -1,6 +1,7 @@
 import styled from "styled-components";
 export default function Draggable({
   id,
+  articleID,
   draggable,
   ondragstart,
   children,
@@ -11,6 +12,7 @@ export default function Draggable({
     <>
       <DragBox
         id={id}
+        data-articleid={articleID}
         draggable={draggable}
         onDragStart={ondragstart}
         onDrop={(event) => event.preventDefault()}

@@ -6,11 +6,12 @@ export async function getAllSelections() {
 
   const allSelections = await FavouriteArticle.find(
     {},
-    { _id: 0, selections: 1 }
+    {selections:1}
   );
-
+  
   let sanitizedselections = allSelections.map((selections) =>
     selections.selections.map((selection) => ({
+      articleID:selections._id?.toString(),
       id: selection.id,
       text: selection.text,
     }))
@@ -62,3 +63,23 @@ export async function getArticlesByCollectionId(id) {
 
   return sanitizedArticlesByColId;
 }
+
+export async function getArticleByID(id){
+  await dbConnect();
+  const article = await FavouriteArticle.findById(id)
+
+  const sanitizedArticle = {
+    id: article.id,
+    title: article.title,
+    description: article.description,
+    fullContent: article.fullContent,
+    selections: article.selections,
+    url: article.url,
+    urlToImage: article.urlToImage,
+    isSaved:true,
+    collectionId:article.collectionId.toString()
+  }
+  return sanitizedArticle
+}
+
+

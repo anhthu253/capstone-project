@@ -1,60 +1,65 @@
-import { useStore } from "../hooks/useStore";
+import { useStore } from "../../hooks/useStore";
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import PopupMenu from "../components/PopupMenu";
-import { getAllCollections } from "../services/collectionService";
-import Button from "../components/Button";
+import { getAllCollections } from "../../services/collectionService";
+import { getSelectionsPerArticle,getArticleByID } from "../../services/articleService";
+import PopupMenu from "../../components/PopupMenu";
+import Button from "../../components/Button";
 import {
   faSquareCaretLeft,
   faFolderPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export async function getServerSideProps() {
+
+export async function getServerSideProps(context) {
+  const {id} = context.params
   const currentCollections = await getAllCollections();
+
+  //query to DB canceled when the it s a temporary ID (articles not saved yet)
+  const currentSelections = id.startsWith("temp")?[]:await getSelectionsPerArticle(id)
+  const currentArticle = id.startsWith("temp")?{}:await getArticleByID(id)
 
   return {
     props: {
       currentCollections,
+      currentSelections,
+      currentArticle
     },
   };
 }
 
-export default function Content({ currentCollections }) {
-  const router = useRouter();
-  const currentArticle = useStore((state) => state.currentArticle);
+export default function Content({ currentCollections, currentSelections, currentArticle }) {
+  const unsavedCurrentArticle = useStore((state) => state.currentArticle); // articles temporarily saved in Zustand storage
   const [popUp, setPopUp] = useState(false);
-  const [selections, setSelections] = useState([]);
+  const [selections, setSelections] = useState(currentSelections); //intialize selections with the current selections from the DB
+  const [article,setArticle] = useState(Object.keys(currentArticle).length===0?unsavedCurrentArticle:currentArticle)
   const contentRef = useRef();
 
   function restoreHighlightRemoveEvent() {
     const spans = document.querySelectorAll(".highlight");
-    spans.forEach((span) => span.addEventListener("dblclick", removeHighlight));
+    spans.forEach((span) => span.addEventListener("dblclick", event => removeHighlight(event.target)));
   }
 
-  async function getCurrentSelectionsFromDB() {
-    try {
-      const response = await fetch(`/api/article/${currentArticle.id}`);
-      const selectionFromDB = await response.json();
-      setSelections(selectionFromDB);
-    } catch (error) {
-      console.error(error);
-    }
+  //remove highlights if they are not to be found in the current selections from DB. 
+  //The lists of selections are updated according to the drag and drop activities in dashboard page
+  function updateHighlights(){
+    const allHighlightSpans = document.querySelectorAll(".highlight") ?? []
+    const deletedHighlightSpans = [...allHighlightSpans].filter(highlightSpan => !selections?.map(selection =>selection.id).includes(highlightSpan.getAttribute("id")) )
+    deletedHighlightSpans.forEach(span => removeHighlight(span)) 
   }
 
   //update document with highlights to database
   async function saveSelectionToDB() {
     const updatedContent = contentRef.current.innerHTML;
     try {
-      const response = await fetch(`/api/article/${currentArticle.id}`, {
+      const response = await fetch(`/api/article/${article.id}`, {
         method: "PUT",
         body: JSON.stringify({
-          ...currentArticle,
+          ...article,
           fullContent: updatedContent,
           selections: selections,
-          //selections: selections,
         }),
       });
     } catch (error) {
@@ -70,8 +75,7 @@ export default function Content({ currentCollections }) {
     return whichParagraph(node?.parentNode);
   }
 
-  function removeHighlight(event) {
-    const span = event.target;
+  function removeHighlight(span) {
     const parent = span.parentNode;
     parent.innerHTML = parent?.innerHTML.replace(
       span.outerHTML,
@@ -83,6 +87,7 @@ export default function Content({ currentCollections }) {
   }
 
   function highLight(event) {
+    if (!article.isSaved) return // highlight funtionality only available to saved articles
     if (event.button === 2) return; //right click
     const selection = window.getSelection();
 
@@ -128,11 +133,10 @@ export default function Content({ currentCollections }) {
     ]);
 
     //remove highlight by double clicking on it
-    span.addEventListener("dblclick", removeHighlight);
+    span.addEventListener("dblclick", event => removeHighlight(event.target));
   }
 
   useEffect(() => {
-    if (currentArticle.isSaved) getCurrentSelectionsFromDB();
     const allParagraphs = document.querySelectorAll("p");
     const allLists = document.querySelectorAll("li");
     allParagraphs.forEach((p) => {
@@ -141,6 +145,7 @@ export default function Content({ currentCollections }) {
     allLists.forEach((li) =>
       li.setAttribute("id", "text" + Math.random().toString(36).substring(2))
     );
+    updateHighlights()
     restoreHighlightRemoveEvent();
   }, []);
 
@@ -151,22 +156,22 @@ export default function Content({ currentCollections }) {
           popUp={popUp}
           setPopUp={setPopUp}
           currentCollections={currentCollections}
-          article={{ ...currentArticle, isSaved: true }}
+          article={{ ...article, isSaved: true }}
         />
       )}
       <StyledSection blur={popUp}>
         <StyledIcons>
           <Link
             href={
-              currentArticle.isSaved
-                ? `/collections/${currentArticle.collectionId}`
+              article.isSaved
+                ? `/collections/${article.collectionId}`
                 : "/articles"
             }
           >
             <FontAwesomeIcon icon={faSquareCaretLeft}></FontAwesomeIcon>
           </Link>
 
-          {!currentArticle.isSaved && (
+          {!article.isSaved && (
             <FontAwesomeIcon
               icon={faFolderPlus}
               onClick={() => {
@@ -175,18 +180,18 @@ export default function Content({ currentCollections }) {
             />
           )}
         </StyledIcons>
-        {currentArticle.isSaved && (
+        {article.isSaved && (
           <StyledButton onClick={saveSelectionToDB}>
             Save highlights
           </StyledButton>
         )}
         <br />
-        <h2>{currentArticle.title}</h2>
+        <h2>{article.title}</h2>
         <StyledContent
           className="articleFullContent"
           ref={contentRef}
           onMouseUp={highLight}
-          dangerouslySetInnerHTML={{ __html: currentArticle.fullContent }}
+          dangerouslySetInnerHTML={{ __html: article.fullContent }}
         />
       </StyledSection>
     </StyledMain>

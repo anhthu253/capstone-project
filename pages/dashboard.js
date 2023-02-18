@@ -66,9 +66,11 @@ export default function Dashboard({ allSelections }) {
   function setBoardFromDropzone(dropzoneWraper) {
     const dropzone = dropzoneWraper.firstChild;
     const dropzoneItems = [...dropzone?.children];
+    
     const newItems = dropzoneItems.map((item) => {
       return {
-        id: Math.random().toString(36).substring(2),
+        id: item.getAttribute("id"),
+        articleID: item.getAttribute("data-articleid"),
         text: item.textContent,
         color: getComputedStyle(item).backgroundColor,
       };
@@ -109,6 +111,28 @@ export default function Dashboard({ allSelections }) {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  async function updateSelectionsToDB(){
+    //update remain draggable items in drag zone
+    //group these items by article ID
+    const remainSelections =draggableItems.filter(item => !board.map(boardItem => boardItem.id).
+    includes(item.id)).reduce((group,item) => {
+      const {articleID} = item
+      group[articleID]= group[articleID] ?? []
+      group[articleID].push(Object.fromEntries(Object.entries(item).filter(([key]) => key!=="articleID" && key!=="color")))
+      return group
+    },{})
+    try{
+      await fetch('/api/article',{
+        method:"PUT",
+        body: JSON.stringify(remainSelections)
+      })
+    }
+    catch(error){
+      console.error(error)
+    }
+
   }
 
   //close the color palette by clicking outside it
@@ -172,7 +196,10 @@ export default function Dashboard({ allSelections }) {
           <Icon
             icon="fluent:save-20-filled"
             width="25"
-            onClick={() => saveBoardToDB()}
+            onClick={() => {
+              saveBoardToDB()
+              updateSelectionsToDB()
+            }}
           ></Icon>
         </StyledIcons>}
       </DZWrapper>

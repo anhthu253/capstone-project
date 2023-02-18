@@ -21,7 +21,7 @@ export default function SearchContainer() {
     const articles = results.map((result) => {
       return {
         ...result,
-        id: Math.random().toString(36).substring(2),
+        id: 'temp'+ Math.random().toString(36).substring(2),
       };
     });
 

@@ -50,7 +50,7 @@ export default function PopupMenu({
     try {
       const response = await fetch("/api/article", {
         method: "PUT",
-        body: JSON.stringify({ ...articleDB, collectionId: collectionId }),
+        body: JSON.stringify({...articleDB, collectionId: collectionId }),
       });
     } catch (error) {
       console.error(error);

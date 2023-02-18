@@ -19,6 +19,7 @@ export default function DragContainer({
         <Draggable
           key={item.id}
           id={item.id}
+          articleID={item.articleID}
           draggable={true}
           ondragstart={ondragstart}
           handleRightClick={(event) => onRightClick(event, item.id)}

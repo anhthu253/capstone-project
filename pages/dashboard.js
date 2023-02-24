@@ -115,24 +115,32 @@ export default function Dashboard({ allSelections }) {
   async function updateSelectionsToDB(){
     //update remain draggable items in drag zone
     //group these items by article ID
-    const remainSelections =draggableItems.filter(item => !board.map(boardItem => boardItem.id).
-    includes(item.id)).reduce((group,item) => {
+    const savedInBoardsSelections = draggableItems.filter(item => board.map(boardItem => boardItem.id).includes(item.id))
+    .reduce((group,item) => {
+      const {articleID} = item
+      group[articleID]= group[articleID] ?? []
+      return group
+    },{})
+
+    const remainSelections = draggableItems.filter(item => !board.map(boardItem => boardItem.id).includes(item.id))
+    .reduce((group,item) => {
       const {articleID} = item
       group[articleID]= group[articleID] ?? []
       group[articleID].push(Object.fromEntries(Object.entries(item).filter(([key]) => key!=="articleID" && key!=="color")))
       return group
     },{})
-    try{
-      await fetch('/api/article',{
-        method:"PUT",
-        body: JSON.stringify(remainSelections)
-      })
-    }
-    catch(error){
-      console.error(error)
-    }
+  
+   try{
+     await fetch('/api/article',{
+       method:"PUT",
+       body: JSON.stringify({...savedInBoardsSelections,...remainSelections})
+     })
+   }
+   catch(error){
+     console.error(error)
+   } 
 
-  }
+   }
 
   //close the color palette by clicking outside it
   function closeColorPalette(event) {

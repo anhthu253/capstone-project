@@ -1,7 +1,5 @@
 import DropBoard from "../components/DropBoard";
 import { getAllDashBoards } from "../services/dashboardService";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState } from "react";
 
@@ -39,24 +37,28 @@ export default function BoardCollections({ allDashBoards }) {
   return dashboards.map((dashboard) => (
     <Wrapper key={dashboard.id}>
       <DropBoard key={dashboard.id} board={dashboard.board}></DropBoard>
-      <StyledIcon
+      <SaveButton
         onClick={() => removeDashboard(dashboard.id)}
-        icon={faTrashCan}
-      />
+      >x</SaveButton>
     </Wrapper>
   ));
 }
 
-const StyledIcon = styled(FontAwesomeIcon)`
-  position: absolute;
-  top: 0px;
-  right: 48%;
-  color: #757677;
+const SaveButton = styled.button`
+ position:relative;
+ top:-1.6rem;
+ left:calc(50% - 16px);
+  width:30px;
+  height:30px;
+  border:none;
+  border-radius:50%;
+  box-shadow: 5px 5px 10px 0px #575E5F;
   :hover {
     cursor:pointer;
   }
-`;
+`
 
 const Wrapper = styled.section`
   position: relative;
+  margin:20px;
 `;

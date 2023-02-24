@@ -17,17 +17,41 @@ const DropArea = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  
+  @media screen and (min-width:481px){
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  @media screen and (min-width:769px){
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  @media screen and (min-width:1025px){
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+  @media screen and (min-width:1281px){
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
   gap: 10px;
   width: 100%;
-  height: 35rem;
-  box-shadow: inset 0 0 10px #757677;
+  min-height: 35rem;
+  box-shadow: inset 0 0 20px #2c332c;
   padding: 25px 0 25px 16px;
   margin: 10px 0;
-  &:empty:not(:focus):before {
+  &:empty:not(:focus)::before {
     content: attr(data-text);
-    opacity: 0.6;
-    grid-row: 2;
+    color:white;
+    opacity: 0.5;
+    position:absolute;
+    top:(50% - 0.5rem);
+    left:calc(50% - 5rem);
     align-self: center;
     justify-self: end;
   }
 `;
+
+ 

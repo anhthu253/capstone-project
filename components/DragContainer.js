@@ -34,11 +34,12 @@ export default function DragContainer({
 
 const Container = styled.ul`
   position: relative;
-  margin-bottom: 10px;
-  --padding: 3px 0;
-  width: 100%;
-  --height: 11rem;
-  --background: #ccc;
+  margin: 30px 0;
+  width: calc(100% - 10px);
+  min-height:180px;
+  background-color:#AAB9BA;
+  padding: 25px 16px;
+  --box-shadow:10px 10px 10px 3px #5B6263;
   display: flex;
   list-style: none;
   overflow-x: auto;
@@ -47,7 +48,7 @@ const Container = styled.ul`
     content: attr(data-text);
     opacity: 0.6;
     align-self: center;
-    margin: 0 auto;
+    margin: 0 auto
   }
 `;
 const ContainerList = styled.ul`

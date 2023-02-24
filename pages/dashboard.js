@@ -3,18 +3,17 @@ import Dropzone from "../components/Dropzone";
 import DragContainer from "../components/DragContainer";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { Icon } from "@iconify/react";
 import ColorBox from "../components/ColorBox";
 import { getAllSelections } from "../services/articleService";
 
 const colorSet = [
-  { id: "5454", color: "transparent" },
+  { id: "5454", color: "#FBF7F5" },
   { id: "87", color: "#E8E19C" },
   { id: "987", color: "#A5E89C" },
   { id: "986", color: "#9CD0E8" },
   { id: "455", color: "#E194B8" },
 ];
-const MAX_DROP_ITEMS = 8;
+const MAX_DROP_ITEMS = 18;
 export async function getServerSideProps() {
   const allSelections = await getAllSelections();
   return {
@@ -143,10 +142,12 @@ export default function Dashboard({ allSelections }) {
       });
   }
   useEffect(() => {
+    setDraggableItems((draggableItems)=> draggableItems.map(item => {return {...item, backgroundColor:"#FBF7F5"}}))
     document.body.addEventListener("click", closeColorPalette);
     return () => {
       document.body.removeEventListener("click", closeColorPalette);
     };
+    
   }, []);
 
   useEffect(() => {
@@ -191,22 +192,16 @@ export default function Dashboard({ allSelections }) {
             drop(event);
             setRemainDragItemCount((prevCount) => prevCount - 1);
           }}
-        ></Dropzone>
-        {board.length > 0 && <StyledIcons>
-          <Icon
-            icon="fluent:save-20-filled"
-            width="25"
-            onClick={() => {
+        ></Dropzone>    
+      </DZWrapper>
+      {board.length > 0 && <SaveButton onClick={() => {
               saveBoardToDB()
               updateSelectionsToDB()
-            }}
-          ></Icon>
-        </StyledIcons>}
-      </DZWrapper>
-
+            }}>Save</SaveButton>}
       <Link href="/boardCollections" passHref>
         <Anchor>see saved dashboards here</Anchor>
       </Link>
+     
     </>
   );
 }
@@ -222,18 +217,18 @@ const Anchor = styled.a`
 
 const DZWrapper = styled.div`
   position: relative;
-  padding: 10px 0;
+  margin-bottom:10px;
+  background-image:url("images/chalkboard.jpg");
 `;
 
-const StyledIcons = styled.span`
-  position: absolute;
-  top: 20px;
-  right: 46%;
-  color: #757677;
+const SaveButton = styled.button`
+  padding: 10px 15px; 
+  border:solid 2px black;
+  margin-right:20px;
   :hover {
     cursor:pointer;
   }
-`;
+`
 
 const ColorPalette = styled.span`
   position: absolute;

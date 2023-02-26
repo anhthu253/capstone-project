@@ -1,7 +1,7 @@
 ## Purpose of the app
 Collecting articles and columns from newspapers around the world so that the news inputs can be narrowed down to one's interest. 
 ## Description
-- users can search for news/articles based on keywords (eg. politics, elections), sources (eg. nytimes), domain (eg. bbc.com, politico.com), when they were published (from -> to), languages.
+- users can search for news/articles based on keywords (eg. politics, elections), domain (eg. bbc.com, politico.com), when they were published (from -> to), languages.
 - from query results, users can add favorite articles to their own collections
 - a user can create as many collections as he/she wishes. Each collection behaves like a playlist in Spotify.
 - in each favourite articles, users can marks favorite paragraphs and save those highlights. 

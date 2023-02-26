@@ -47,8 +47,8 @@ const DropArea = styled.section`
     color:white;
     opacity: 0.5;
     position:absolute;
-    top:(50% - 0.5rem);
-    left:calc(50% - 5rem);
+    top:calc(50% - 5px);
+    left:calc(50% - 45px);
     align-self: center;
     justify-self: end;
   }

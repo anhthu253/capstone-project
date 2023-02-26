@@ -41,9 +41,11 @@ export default function Dashboard({ allSelections }) {
     setCurrentDraggable({ id: id });
 
     //popup the color pallete at right mouse click
+    const winWidth = window.innerWidth;
+    const colorBoxWidth = 185;
     setColorPalette({
       display: true,
-      posX: event.pageX - 80 + "px",
+      posX: event.pageX  > winWidth-colorBoxWidth ? winWidth-colorBoxWidth : event.pageX + "px",
       posY: event.pageY + "px",
     });
   }

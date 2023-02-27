@@ -73,6 +73,7 @@ export default function PopupMenu({
             {collections.map((collection) => (
               <CollectionItem
                 key={collection.id}
+                description={collection.description.length===0?"no description":collection.description}
                 removeCollection={() => {}}
                 onCollection={() => onSelectedCollection(collection.id)}
                 removable={false}

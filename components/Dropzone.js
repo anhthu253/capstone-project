@@ -39,7 +39,6 @@ const DropArea = styled.section`
   gap: 10px;
   width: 100%;
   min-height: 35rem;
-  box-shadow: inset 0 0 20px #2c332c;
   padding: 25px 0 25px 16px;
   margin: 10px 0;
   &:empty:not(:focus)::before {

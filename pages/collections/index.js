@@ -78,6 +78,7 @@ export default function Collections({ currentCollections }) {
           {collections.map((collection) => (
             <CollectionItem
               key={collection.id}
+              description={collection.description.length===0?"no description":collection.description.length}
               removable={true}
               removeCollection={() => removeCollection(collection.id)}
             >

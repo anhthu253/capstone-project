@@ -2,13 +2,14 @@ import styled from "styled-components";
 import Image from "next/image";
 export default function ComponentItem({
   children,
+  description,
   removeCollection,
   onCollection,
   removable,
 }) {
   return (
     <StyledColItem>
-      <span onClick={onCollection}>{children}</span>
+      <StyledSpan data-description={description} onClick={onCollection}>{children}</StyledSpan>
       {removable && (
         <Image
           src="/images/delete.png"
@@ -34,3 +35,20 @@ const StyledColItem = styled.li`
     cursor: pointer;
   }
 `;
+
+const StyledSpan = styled.span`
+  position:relative;
+  &:hover:before{
+    content:attr(data-description);
+    position:absolute;
+    top:24px;
+    left:0;
+    min-width:200px;
+    height:auto;
+    border:1px solid #aaaaaa;
+    border-radius:10px;
+    padding:10px;
+    background:#EFEAC4;
+    z-index:1000;
+  }
+`

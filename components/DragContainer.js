@@ -35,11 +35,10 @@ export default function DragContainer({
 const Container = styled.ul`
   position: relative;
   margin: 30px 0;
-  width: calc(100% - 10px);
+  width: 100%;
   min-height:180px;
   background-color:#AAB9BA;
   padding: 25px 16px;
-  --box-shadow:10px 10px 10px 3px #5B6263;
   display: flex;
   list-style: none;
   overflow-x: auto;
